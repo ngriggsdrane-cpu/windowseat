@@ -1,0 +1,42 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --background: #FAF3E0;
+  --foreground: #1A1208;
+}
+
+body {
+  color: var(--foreground);
+  background: var(--background);
+}
+
+@layer utilities {
+  .text-balance {
+    text-wrap: balance;
+  }
+  .animate-ticker {
+    animation: ticker 30s linear infinite;
+  }
+}
+
+@keyframes ticker {
+  0% { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
+}
+
+@keyframes dots {
+  0%, 80%, 100% { transform: scale(0.6); opacity: 0.4; }
+  40% { transform: scale(1.0); opacity: 1; }
+}
+
+.dot1 { animation: dots 1.4s ease-in-out infinite; animation-delay: 0s; }
+.dot2 { animation: dots 1.4s ease-in-out infinite; animation-delay: 0.2s; }
+.dot3 { animation: dots 1.4s ease-in-out infinite; animation-delay: 0.4s; }
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+  }
+}
