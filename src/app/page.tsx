@@ -168,7 +168,7 @@ function Hero() {
           <div ref={leftRef} className={FADE}>
             <h1 className="font-display tracking-tight text-[2.6rem] sm:text-5xl md:text-6xl font-black text-ink leading-[1.05] mb-5">
               <span className="block">No time for a tour?</span>
-              <span className="block text-orange">Take the scenic route.</span>
+              <span className="block text-orange">Take the scenic&nbsp;route.</span>
             </h1>
             <p className="font-body text-muted text-lg md:text-xl leading-relaxed mb-8 max-w-md">
               Short, narrated detours past the landmarks worth seeing, on foot, by bike or in your Uber or Lyft.
