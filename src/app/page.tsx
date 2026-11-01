@@ -51,6 +51,7 @@ function Nav() {
     { href: "#how-it-works", label: "How It Works" },
     { href: "#scenic-route", label: "The Reroute" },
     { href: "#anywhere", label: "Walk & Bike" },
+    { href: "#sponsors", label: "For Sponsors" },
     { href: "#platforms", label: "For Platforms" },
     { href: "#cities", label: "Cities" },
   ];
@@ -183,21 +184,21 @@ function Hero() {
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-16 items-center">
           <div ref={leftRef} className={FADE}>
             <span className="inline-block bg-amber/20 text-ink text-xs font-dm-sans font-semibold px-3 py-1 rounded-full uppercase tracking-widest mb-6">
-              The Scenic Route plug-in for rideshare
+              Scenic Route · walk, bike or ride
             </span>
             <h1 className="font-fraunces text-5xl md:text-6xl lg:text-7xl font-black text-ink leading-[1.05] text-balance mb-6">
               Take the long way.{" "}
               <span className="italic text-orange">On purpose.</span>
             </h1>
             <p className="font-dm-sans text-muted text-lg md:text-xl leading-relaxed mb-8 max-w-md">
-              WindowSeat plugs into ride apps like Uber and Lyft and bends your trip past the landmarks worth seeing. A few minutes longer, priced before you go, and narrated as you pass.
+              WindowSeat bends your walk, bike ride or rideshare past the landmarks worth seeing. A few minutes longer, often free thanks to a local sponsor, and narrated as you pass.
             </p>
             <div className="flex flex-col sm:flex-row gap-4">
               <a href="#cta" className="bg-orange text-cream font-dm-sans font-semibold px-7 py-4 rounded-full text-center hover:bg-orange/90 transition-colors shadow-lg shadow-orange/25">
                 Join the rider waitlist
               </a>
-              <a href="#platforms" className="border-2 border-ink text-ink font-dm-sans font-semibold px-7 py-4 rounded-full text-center hover:bg-ink hover:text-cream transition-colors">
-                For platforms →
+              <a href="#sponsors" className="border-2 border-ink text-ink font-dm-sans font-semibold px-7 py-4 rounded-full text-center hover:bg-ink hover:text-cream transition-colors">
+                For tourism boards →
               </a>
             </div>
           </div>
@@ -405,6 +406,45 @@ function Anywhere() {
               </p>
             </div>
           </div>
+        </div>
+      </div>
+    </section>
+  );
+}
+
+// ── For Tourism Boards & Sponsors ─────────────────────────────────────────────
+const SPONSOR_POINTS = [
+  { stat: "Per detour", title: "Pay only for visits that happen", desc: "You're billed for each completed detour, not for impressions. If nobody takes the long way, you don't pay." },
+  { stat: "Hidden Gem", title: "Send visitors where you want them", desc: "Steer travelers toward neighborhoods, museums and streets they'd otherwise skip, in a few minutes of their trip." },
+  { stat: "Monthly report", title: "See exactly who went where", desc: "Detours taken, stories finished, times of day and routes, all anonymized and ready for your board." },
+];
+
+function Sponsors() {
+  const headRef = useFadeUp();
+  return (
+    <section id="sponsors" className="py-20 md:py-28 bg-amber/15">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div ref={headRef} className={`${FADE} max-w-2xl mb-12`}>
+          <Eyebrow>For Tourism Boards &amp; Sponsors</Eyebrow>
+          <h2 className="font-fraunces text-4xl md:text-5xl font-black text-ink mb-4">Put your city&apos;s best block on the route</h2>
+          <p className="font-dm-sans text-muted text-lg">
+            Sponsor a Scenic Route and the detour is free for the traveler, whether they&apos;re walking, biking or in a ride. You get visitors past the places that matter to you, and proof that they went.
+          </p>
+        </div>
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-10">
+          {SPONSOR_POINTS.map((p) => (
+            <div key={p.title} className="bg-cream rounded-2xl p-6 border border-ink/10">
+              <span className="text-orange text-xs font-dm-sans font-bold uppercase tracking-widest">{p.stat}</span>
+              <h3 className="font-fraunces text-xl font-bold text-ink mt-2 mb-2">{p.title}</h3>
+              <p className="font-dm-sans text-muted text-sm leading-relaxed">{p.desc}</p>
+            </div>
+          ))}
+        </div>
+        <div className="flex flex-col sm:flex-row gap-4 items-start sm:items-center">
+          <a href="#cta" className="bg-ink text-cream font-dm-sans font-semibold px-7 py-4 rounded-full hover:bg-ink/90 transition-colors">
+            Start a New York pilot →
+          </a>
+          <p className="font-dm-sans text-muted text-sm">Now booking 3-month pilots with tourism offices, museums and hotels.</p>
         </div>
       </div>
     </section>
@@ -693,7 +733,7 @@ function CTASection() {
             Same ride.{" "}<span className="italic">Better view.</span>
           </h2>
           <p className="font-dm-sans text-cream/80 text-lg mb-8">
-            Riders: be first to try Scenic Route. Platforms, tourism boards and hotels: let&apos;s talk.
+            Travelers: be first to try Scenic Route in New York. Tourism boards, museums, hotels and platforms: let&apos;s set up a pilot.
           </p>
           {status === "success" ? (
             <div className="bg-cream/20 border border-cream/30 rounded-2xl p-8">
@@ -713,7 +753,7 @@ function CTASection() {
                     onClick={() => setRole(r)}
                     className={`py-2.5 rounded-full font-dm-sans text-sm font-semibold transition-colors ${role === r ? "bg-cream text-ink" : "text-cream/80"}`}
                   >
-                    {r === "rider" ? "I'm a rider" : "I'm a partner"}
+                    {r === "rider" ? "I'm a traveler" : "I'm a sponsor or partner"}
                   </button>
                 ))}
               </div>
@@ -727,7 +767,7 @@ function CTASection() {
                 disabled={status === "loading"}
                 className="w-full px-7 py-4 rounded-full bg-ink text-cream font-dm-sans font-semibold text-base hover:bg-ink/90 transition-colors disabled:opacity-60"
               >
-                {status === "loading" ? "Sending…" : role === "rider" ? "Join the waitlist →" : "Request a demo →"}
+                {status === "loading" ? "Sending…" : role === "rider" ? "Join the waitlist →" : "Talk about a pilot →"}
               </button>
               {status === "error" && (
                 <p className="font-dm-sans text-cream/90 text-sm bg-ink/20 rounded-xl px-4 py-2">{message}</p>
@@ -767,6 +807,7 @@ export default function Home() {
       <HowItWorks />
       <RerouteSection />
       <Anywhere />
+      <Sponsors />
       <Platforms />
       <BusinessModel />
       <Cities />
