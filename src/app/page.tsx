@@ -62,7 +62,7 @@ function Nav() {
     { href: "#anywhere", label: "Walk & Bike" },
     { href: "#sponsors", label: "For Sponsors" },
     { href: "#platforms", label: "For Platforms" },
-    { href: "#cities", label: "Cities" },
+    { href: "#live", label: "Live Guide" },
   ];
 
   return (
@@ -418,6 +418,90 @@ function Anywhere() {
   );
 }
 
+// ── WindowSeat Live (conversational upgrade) ──────────────────────────────────
+const LIVE_CHAT = [
+  { who: "you", text: "I'm at the Palace of Fine Arts. I've got six minutes. Walk me through it." },
+  { who: "guide", text: "Six minutes, got it. Head toward the rotunda along the lagoon. It was built for the 1915 world's fair and meant to be torn down. The city liked it too much..." },
+  { who: "you", text: "Why do the columns have women facing inward?" },
+  { who: "guide", text: "Those are the weeping figures on the colonnade. The designer wanted the place to feel like a melancholy ruin..." },
+  { who: "you", text: "Now I'm walking to the Golden Gate Bridge. About ten minutes." },
+  { who: "guide", text: "Perfect. Take the path along Crissy Field. In about two minutes, look left for the old airfield..." },
+];
+
+const LIVE_FEATURES = [
+  { icon: "⏱️", title: "Fits your time", desc: "Say \"I have six minutes\" and the tour is cut to fit, with the best parts first." },
+  { icon: "🧭", title: "Knows your route", desc: "Tell it where you're headed and it tells you which way to walk and when to look." },
+  { icon: "💬", title: "Ask anything", desc: "Interrupt anytime: \"What's that building?\", \"Go deeper\", \"Skip this\"." },
+  { icon: "✅", title: "Checked facts first", desc: "It answers from our editor-checked stories, and says so when it isn't sure." },
+];
+
+function Live() {
+  const leftRef = useFadeUp();
+  const rightRef = useFadeUp();
+  return (
+    <section id="live" className="py-20 md:py-28 bg-ink">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-start">
+          <div ref={leftRef} className={FADE}>
+            <Eyebrow dark>Upgrade · WindowSeat Live</Eyebrow>
+            <h2 className="font-display tracking-tight text-4xl md:text-5xl font-black text-cream mb-4">A guide you can talk to</h2>
+            <p className="font-body text-cream/70 text-lg mb-8">
+              Tell it where you are, how long you have and where you&apos;re going. It turns the history, the details and the best route into a tour that fits your walk, and you can talk back.
+            </p>
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-8">
+              {LIVE_FEATURES.map((f) => (
+                <div key={f.title} className="bg-white/5 rounded-xl p-5">
+                  <div className="flex items-center gap-3 mb-2">
+                    <span className="text-xl">{f.icon}</span>
+                    <span className="font-body text-cream text-sm font-semibold">{f.title}</span>
+                  </div>
+                  <p className="font-body text-cream/60 text-sm leading-relaxed">{f.desc}</p>
+                </div>
+              ))}
+            </div>
+            <div className="grid grid-cols-2 gap-4 max-w-md">
+              <div className="border border-white/15 rounded-xl p-4">
+                <p className="font-body text-cream/50 text-xs uppercase tracking-widest mb-1">Free</p>
+                <p className="font-display text-cream text-lg font-bold">Story detours</p>
+                <p className="font-body text-cream/60 text-xs mt-1">Ready-made stories on every Scenic Route.</p>
+              </div>
+              <div className="border-2 border-amber rounded-xl p-4">
+                <p className="font-body text-amber text-xs uppercase tracking-widest mb-1">Live</p>
+                <p className="font-display text-cream text-lg font-bold">$2.99 a day</p>
+                <p className="font-body text-cream/60 text-xs mt-1">or $6.99 for a week. Sometimes free, courtesy of a sponsor.</p>
+              </div>
+            </div>
+          </div>
+          <div ref={rightRef} className={`${FADE} flex justify-center lg:justify-end`}>
+            <div className="w-full max-w-sm bg-[#0B1B33] rounded-xl p-5 border border-white/10">
+              <div className="flex items-center justify-between mb-4">
+                <div className="flex items-center gap-2">
+                  <span className="w-2 h-2 rounded-full bg-amber inline-block" />
+                  <span className="font-body text-cream text-sm font-semibold">Live · San Francisco</span>
+                </div>
+                <span className="font-body text-xs text-ink bg-amber rounded-md px-2 py-0.5 font-semibold">6 min left</span>
+              </div>
+              <div className="space-y-3">
+                {LIVE_CHAT.map((m, i) => (
+                  <div key={i} className={`flex ${m.who === "you" ? "justify-end" : "justify-start"}`}>
+                    <p className={`font-body text-sm leading-relaxed px-3.5 py-2.5 rounded-xl max-w-[85%] ${m.who === "you" ? "bg-amber text-ink" : "bg-white/10 text-cream/90"}`}>
+                      {m.text}
+                    </p>
+                  </div>
+                ))}
+              </div>
+              <div className="mt-4 flex items-center gap-3 border-t border-white/10 pt-4">
+                <span className="w-10 h-10 rounded-full bg-amber text-ink flex items-center justify-center text-lg" aria-hidden="true">🎙️</span>
+                <span className="font-body text-cream/50 text-sm">Tap and talk, or just listen</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  );
+}
+
 // ── For Tourism Boards & Sponsors ─────────────────────────────────────────────
 const SPONSOR_POINTS = [
   { stat: "Per detour", title: "Pay only for visits that happen", desc: "You're billed for each completed detour, not for impressions. If nobody takes the long way, you don't pay." },
@@ -528,7 +612,7 @@ const PAYERS = [
   { tag: "Rider pays", title: "Rider upgrade", desc: "The rider pays the extra time and distance at the platform's usual rates. WindowSeat earns a small fee per completed detour from the platform." },
   { tag: "Sponsor pays", title: "Sponsored detours", desc: "A tourism board, museum, hotel or brand covers the ride past its landmark and pays a premium on top. The platform and WindowSeat share it." },
   { tag: "Partner pays", title: "Licensing & insight", desc: "A per-city license for routes and narration, plus anonymized reports for tourism boards on which landmarks riders choose, and when." },
-  { tag: "You pay (optional)", title: "City packs", desc: "In the standalone app, short stories are free. Deeper city packs with longer narration and offline maps cost a few dollars each." },
+  { tag: "You pay (optional)", title: "WindowSeat Live", desc: "Story detours are free. The talk-back guide that fits your time and route is $2.99 a day or $6.99 a week, and sponsors can make it free for a weekend." },
 ];
 
 const SPLIT = [
@@ -582,6 +666,7 @@ const CITIES = [
   { name: "New York", emoji: "🗽", status: "launch", desc: "JFK and LaGuardia rides into Manhattan pass bridges and skyline most visitors only see in photos.", landmarks: ["Brooklyn Bridge", "Queensboro skyline", "Flatiron"], skyline: "M10,60 L10,30 L18,30 L18,10 L26,10 L26,30 L34,30 L34,20 L42,20 L42,30 L50,30 L50,40 L58,40 L58,15 L66,15 L66,40 L74,40 L74,50 L82,50 L82,35 L90,35 L90,60" },
   { name: "Paris", emoji: "🗼", status: "launch", desc: "Almost any ride across the city can swing along the Seine for a few extra minutes.", landmarks: ["Eiffel Tower", "Arc de Triomphe", "Pont Alexandre III"], skyline: "M10,60 L20,60 L20,40 L30,25 L38,10 L46,25 L54,40 L54,60 L62,60 L62,35 L70,35 L70,60 L78,60 L78,45 L86,45 L86,60" },
   { name: "London", emoji: "🎡", status: "launch", desc: "Thames crossings put two thousand years of history on one side of the car or the other.", landmarks: ["Tower Bridge", "Big Ben", "St Paul's"], skyline: "M10,60 L10,30 L20,30 L20,20 L24,20 L24,10 L28,10 L28,20 L32,20 L32,30 L42,30 L42,50 L50,50 L50,30 L60,30 L60,15 L68,15 L68,30 L78,30 L78,50 L90,50 L90,60" },
+  { name: "San Francisco", emoji: "🌉", status: "soon", desc: "From the Palace of Fine Arts along Crissy Field to the Golden Gate, one walk covers a century.", landmarks: ["Palace of Fine Arts", "Crissy Field", "Golden Gate Bridge"], skyline: "M10,60 L10,45 L18,45 L18,20 L22,20 L22,45 L58,45 L58,20 L62,20 L62,45 L90,45 L90,60 M18,24 Q40,48 58,24" },
   { name: "Rome", emoji: "🏛️", status: "soon", desc: "The eternal city's secrets told landmark by ancient landmark.", landmarks: ["Colosseum", "Vatican", "Trevi Fountain"], skyline: "M10,60 L10,50 L15,50 L15,35 L20,35 L20,50 L30,50 L30,40 L35,30 L40,40 L40,50 L50,50 L50,35 L60,35 L60,50 L70,50 L70,40 L80,40 L80,60" },
   { name: "Barcelona", emoji: "⛪", status: "soon", desc: "Gaudí, the Gothic Quarter and sun-drenched boulevards.", landmarks: ["Sagrada Família", "Park Güell", "La Rambla"], skyline: "M10,60 L10,40 L20,30 L20,20 L25,12 L30,20 L30,30 L40,30 L40,40 L50,40 L50,25 L55,18 L60,25 L60,40 L70,40 L70,50 L80,50 L80,60" },
   { name: "Tokyo", emoji: "⛩️", status: "soon", desc: "Ancient temples and neon lights, and every district tells a different story.", landmarks: ["Senso-ji", "Shibuya Crossing", "Shinjuku"], skyline: "M10,60 L10,45 L14,45 L14,35 L18,35 L18,25 L22,25 L22,35 L26,35 L26,45 L36,45 L36,30 L40,20 L44,30 L44,45 L54,45 L54,50 L64,50 L64,35 L72,35 L72,50 L82,50 L82,60" },
@@ -810,6 +895,7 @@ export default function Home() {
       <HowItWorks />
       <RerouteSection />
       <Anywhere />
+      <Live />
       <Sponsors />
       <Platforms />
       <BusinessModel />
