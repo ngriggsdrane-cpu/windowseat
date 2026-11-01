@@ -1,53 +1,29 @@
 import { NextRequest, NextResponse } from "next/server";
-import { promises as fs } from "fs";
-import path from "path";
+import { insertRow } from "@/lib/store";
 
-const WAITLIST_FILE = path.join(process.cwd(), "waitlist.json");
-
-interface WaitlistEntry {
-  name: string;
-  email: string;
-  role: "rider" | "partner";
-  org?: string;
-  timestamp: string;
-}
-
-async function readWaitlist(): Promise<WaitlistEntry[]> {
-  try {
-    const data = await fs.readFile(WAITLIST_FILE, "utf8");
-    return JSON.parse(data);
-  } catch {
-    return [];
-  }
-}
+const EMAIL = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
 export async function POST(req: NextRequest) {
-  const body = await req.json();
-  const { name, email, org } = body;
-  const role: "rider" | "partner" = body.role === "partner" ? "partner" : "rider";
-
-  if (!name || !email) {
-    return NextResponse.json({ error: "Name and email are required." }, { status: 400 });
+  let body: Record<string, unknown>;
+  try {
+    body = await req.json();
+  } catch {
+    return NextResponse.json({ error: "Invalid request." }, { status: 400 });
   }
 
-  const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-  if (role === "partner" && !org) {
-    return NextResponse.json({ error: "Please add your company or organization." }, { status: 400 });
-  }
+  const name = String(body.name ?? "").trim().slice(0, 120);
+  const email = String(body.email ?? "").trim().toLowerCase().slice(0, 200);
+  const role = body.role === "partner" ? "partner" : "traveler";
+  const org = role === "partner" ? String(body.org ?? "").trim().slice(0, 200) : null;
+  const ref = body.ref ? String(body.ref).slice(0, 64) : null;
 
-  if (!emailRegex.test(email)) {
-    return NextResponse.json({ error: "Invalid email address." }, { status: 400 });
-  }
+  if (!name || !email) return NextResponse.json({ error: "Name and email are required." }, { status: 400 });
+  if (!EMAIL.test(email)) return NextResponse.json({ error: "Enter a valid email address." }, { status: 400 });
+  if (role === "partner" && !org) return NextResponse.json({ error: "Add your company or organization." }, { status: 400 });
 
-  const entries = await readWaitlist();
+  const ok = await insertRow("signups", { name, email, role, org, ref, created_at: new Date().toISOString() });
+  if (!ok) return NextResponse.json({ error: "Something went wrong. Please try again." }, { status: 500 });
 
-  if (entries.some((e) => e.email.toLowerCase() === email.toLowerCase())) {
-    return NextResponse.json({ message: "You're already on the list!" }, { status: 200 });
-  }
-
-  entries.push({ name, email, role, org: role === "partner" ? org : undefined, timestamp: new Date().toISOString() });
-  await fs.writeFile(WAITLIST_FILE, JSON.stringify(entries, null, 2), "utf8");
-
-  const message = role === "partner" ? "Thanks — we'll reach out shortly." : "You're on the list!";
+  const message = role === "partner" ? "Thanks. We'll be in touch about a pilot." : "You're on the list.";
   return NextResponse.json({ message }, { status: 201 });
 }
