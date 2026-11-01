@@ -418,35 +418,40 @@ function Anywhere() {
   );
 }
 
-// ── WindowSeat Live (conversational upgrade) ──────────────────────────────────
-const LIVE_CHAT = [
-  { who: "you", text: "I'm at the Palace of Fine Arts. I've got six minutes. Walk me through it." },
-  { who: "guide", text: "Six minutes, got it. Head toward the rotunda along the lagoon. It was built for the 1915 world's fair and meant to be torn down. The city liked it too much..." },
-  { who: "you", text: "Why do the columns have women facing inward?" },
-  { who: "guide", text: "Those are the weeping figures on the colonnade. The designer wanted the place to feel like a melancholy ruin..." },
-  { who: "you", text: "Now I'm walking to the Golden Gate Bridge. About ten minutes." },
-  { who: "guide", text: "Perfect. Take the path along Crissy Field. In about two minutes, look left for the old airfield..." },
+// ── WindowSeat Live (pre-made clips stitched by geofence) ─────────────────────
+const LIVE_QUEUE = [
+  { place: "Palace of Fine Arts", layer: "Story", secs: 75, state: "done" },
+  { place: "The weeping figures", layer: "Glance", secs: 20, state: "playing" },
+  { place: "Walk along the lagoon", layer: "Bridge", secs: 30, state: "next" },
+  { place: "Crissy Field airfield", layer: "Story", secs: 60, state: "next" },
+  { place: "Golden Gate Bridge", layer: "Deep dive", secs: 150, state: "next" },
 ];
 
 const LIVE_FEATURES = [
-  { icon: "⏱️", title: "Fits your time", desc: "Say \"I have six minutes\" and the tour is cut to fit, with the best parts first." },
-  { icon: "🧭", title: "Knows your route", desc: "Tell it where you're headed and it tells you which way to walk and when to look." },
-  { icon: "💬", title: "Ask anything", desc: "Interrupt anytime: \"What's that building?\", \"Go deeper\", \"Skip this\"." },
-  { icon: "✅", title: "Checked facts first", desc: "It answers from our editor-checked stories, and says so when it isn't sure." },
+  { icon: "⏱️", title: "Fits your time", desc: "Every stop has a 15-second, 1-minute and 3-minute version. Say you have six minutes and it picks the mix that fits." },
+  { icon: "📍", title: "Plays where you are", desc: "Clips start as you reach each spot, and tell you to look left or right depending on which way you're coming from." },
+  { icon: "👆", title: "Go deeper or skip", desc: "Tap or say \"go deeper\", \"skip\" or \"what's that?\" and it plays the matching clip for what's in front of you." },
+  { icon: "📶", title: "Works offline", desc: "A whole neighborhood downloads before you go, so it works with no signal and no data." },
 ];
+
+function fmt(secs: number) {
+  const m = Math.floor(secs / 60), s = secs % 60;
+  return m ? `${m}:${String(s).padStart(2, "0")}` : `0:${String(s).padStart(2, "0")}`;
+}
 
 function Live() {
   const leftRef = useFadeUp();
   const rightRef = useFadeUp();
+  const total = LIVE_QUEUE.reduce((a, c) => a + c.secs, 0);
   return (
     <section id="live" className="py-20 md:py-28 bg-ink">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-start">
           <div ref={leftRef} className={FADE}>
             <Eyebrow dark>Upgrade · WindowSeat Live</Eyebrow>
-            <h2 className="font-display tracking-tight text-4xl md:text-5xl font-black text-cream mb-4">A guide you can talk to</h2>
+            <h2 className="font-display tracking-tight text-4xl md:text-5xl font-black text-cream mb-4">A guide that keeps pace with you</h2>
             <p className="font-body text-cream/70 text-lg mb-8">
-              Tell it where you are, how long you have and where you&apos;re going. It turns the history, the details and the best route into a tour that fits your walk, and you can talk back.
+              Tell it how long you have and where you&apos;re going. Live builds a tour from short, fact-checked audio clips and plays each one as you reach it, so the history, the details and the route all fit your walk.
             </p>
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-8">
               {LIVE_FEATURES.map((f) => (
@@ -463,7 +468,7 @@ function Live() {
               <div className="border border-white/15 rounded-xl p-4">
                 <p className="font-body text-cream/50 text-xs uppercase tracking-widest mb-1">Free</p>
                 <p className="font-display text-cream text-lg font-bold">Story detours</p>
-                <p className="font-body text-cream/60 text-xs mt-1">Ready-made stories on every Scenic Route.</p>
+                <p className="font-body text-cream/60 text-xs mt-1">One story per stop on every Scenic Route.</p>
               </div>
               <div className="border-2 border-amber rounded-xl p-4">
                 <p className="font-body text-amber text-xs uppercase tracking-widest mb-1">Live</p>
@@ -474,25 +479,35 @@ function Live() {
           </div>
           <div ref={rightRef} className={`${FADE} flex justify-center lg:justify-end`}>
             <div className="w-full max-w-sm bg-[#0B1B33] rounded-xl p-5 border border-white/10">
-              <div className="flex items-center justify-between mb-4">
+              <div className="flex items-center justify-between mb-1">
                 <div className="flex items-center gap-2">
                   <span className="w-2 h-2 rounded-full bg-amber inline-block" />
                   <span className="font-body text-cream text-sm font-semibold">Live · San Francisco</span>
                 </div>
-                <span className="font-body text-xs text-ink bg-amber rounded-md px-2 py-0.5 font-semibold">6 min left</span>
+                <span className="font-body text-xs text-ink bg-amber rounded-md px-2 py-0.5 font-semibold">6 min</span>
               </div>
-              <div className="space-y-3">
-                {LIVE_CHAT.map((m, i) => (
-                  <div key={i} className={`flex ${m.who === "you" ? "justify-end" : "justify-start"}`}>
-                    <p className={`font-body text-sm leading-relaxed px-3.5 py-2.5 rounded-xl max-w-[85%] ${m.who === "you" ? "bg-amber text-ink" : "bg-white/10 text-cream/90"}`}>
-                      {m.text}
-                    </p>
-                  </div>
+              <p className="font-body text-cream/50 text-xs mb-4">Palace of Fine Arts → Golden Gate Bridge</p>
+              <ol className="space-y-2">
+                {LIVE_QUEUE.map((c) => (
+                  <li key={c.place} className={`flex items-center justify-between rounded-lg px-3 py-2.5 border ${c.state === "playing" ? "bg-amber/15 border-amber/50" : "bg-white/5 border-white/5"}`}>
+                    <div className="flex items-center gap-3">
+                      <span className={`w-5 text-center text-xs ${c.state === "playing" ? "text-amber" : c.state === "done" ? "text-cream/40" : "text-cream/30"}`}>
+                        {c.state === "done" ? "✓" : c.state === "playing" ? "▶" : "•"}
+                      </span>
+                      <div>
+                        <p className={`font-body text-sm ${c.state === "done" ? "text-cream/50 line-through" : "text-cream"}`}>{c.place}</p>
+                        <p className="font-body text-[11px] text-cream/40">{c.layer}</p>
+                      </div>
+                    </div>
+                    <span className="font-body text-xs text-cream/50">{fmt(c.secs)}</span>
+                  </li>
                 ))}
-              </div>
-              <div className="mt-4 flex items-center gap-3 border-t border-white/10 pt-4">
-                <span className="w-10 h-10 rounded-full bg-amber text-ink flex items-center justify-center text-lg" aria-hidden="true">🎙️</span>
-                <span className="font-body text-cream/50 text-sm">Tap and talk, or just listen</span>
+              </ol>
+              <p className="font-body text-[11px] text-cream/40 mt-3 text-right">{fmt(total)} of audio planned for your walk</p>
+              <div className="mt-4 grid grid-cols-3 gap-2 border-t border-white/10 pt-4">
+                {["Go deeper", "What's that?", "Skip"].map((b) => (
+                  <span key={b} className="font-body text-xs text-center text-cream bg-white/10 rounded-md py-2">{b}</span>
+                ))}
               </div>
             </div>
           </div>
@@ -612,7 +627,7 @@ const PAYERS = [
   { tag: "Rider pays", title: "Rider upgrade", desc: "The rider pays the extra time and distance at the platform's usual rates. WindowSeat earns a small fee per completed detour from the platform." },
   { tag: "Sponsor pays", title: "Sponsored detours", desc: "A tourism board, museum, hotel or brand covers the ride past its landmark and pays a premium on top. The platform and WindowSeat share it." },
   { tag: "Partner pays", title: "Licensing & insight", desc: "A per-city license for routes and narration, plus anonymized reports for tourism boards on which landmarks riders choose, and when." },
-  { tag: "You pay (optional)", title: "WindowSeat Live", desc: "Story detours are free. The talk-back guide that fits your time and route is $2.99 a day or $6.99 a week, and sponsors can make it free for a weekend." },
+  { tag: "You pay (optional)", title: "WindowSeat Live", desc: "Story detours are free. The full guide that fits your time and route is $2.99 a day or $6.99 a week, and sponsors can make it free for a weekend." },
 ];
 
 const SPLIT = [
