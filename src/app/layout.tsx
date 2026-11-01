@@ -15,7 +15,7 @@ const body = Inter({
 });
 
 export const metadata: Metadata = {
-  title: "WindowSeat — Take the long way. On purpose.",
+  title: "WindowSeat — No time for a tour? Take the scenic route.",
   description:
     "Short, narrated detours past the landmarks worth seeing, on foot, by bike or in a ride. Free for travelers.",
 };

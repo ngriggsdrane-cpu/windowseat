@@ -166,9 +166,9 @@ function Hero() {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-16 items-center">
           <div ref={leftRef} className={FADE}>
-            <h1 className="font-display tracking-tight text-5xl md:text-6xl lg:text-7xl font-black text-ink leading-[1.05] text-balance mb-5">
-              Take the long way.{" "}
-              <span className="text-orange">On purpose.</span>
+            <h1 className="font-display tracking-tight text-[2.6rem] sm:text-5xl md:text-6xl font-black text-ink leading-[1.05] mb-5">
+              <span className="block">No time for a tour?</span>
+              <span className="block text-orange">Take the scenic route.</span>
             </h1>
             <p className="font-body text-muted text-lg md:text-xl leading-relaxed mb-8 max-w-md">
               Short, narrated detours past the landmarks worth seeing, on foot, by bike or in your Uber or Lyft.
@@ -447,8 +447,8 @@ function CTASection() {
     <section id="cta" className="py-24 md:py-32 bg-amber">
       <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
         <div ref={ref} className={FADE}>
-          <h2 className="font-display tracking-tight text-5xl md:text-6xl lg:text-7xl font-black text-ink leading-[1.05] mb-4">
-            Same ride.{" "}<span className="underline decoration-ink decoration-[6px] underline-offset-8">Better view.</span>
+          <h2 className="font-display tracking-tight text-[2.4rem] sm:text-5xl md:text-6xl font-black text-ink leading-[1.1] mb-5">
+            <span className="block">48 hours in town?</span><span className="block"><span className="underline decoration-ink decoration-[5px] underline-offset-[10px]">Don&apos;t waste the ride.</span></span>
           </h2>
           <p className="font-body text-ink/80 text-lg mb-8">
             Try it first in New York, or set up a partner pilot.
