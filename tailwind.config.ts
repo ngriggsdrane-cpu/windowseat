@@ -9,16 +9,16 @@ const config: Config = {
   theme: {
     extend: {
       colors: {
-        cream: "#FAF3E0",
-        orange: "#E8520A",
-        amber: "#F2A51A",
-        ink: "#1A1208",
-        muted: "#6B5D4F",
-        "ink-light": "#2C1F0E",
+        cream: "#F7F7F2",
+        orange: "#D9481F",
+        amber: "#FFC72C",
+        ink: "#13294B",
+        muted: "#4A5A73",
+        "ink-light": "#1E3A66",
       },
       fontFamily: {
-        fraunces: ["var(--font-fraunces)", "serif"],
-        "dm-sans": ["var(--font-dm-sans)", "sans-serif"],
+        display: ["var(--font-display)", "sans-serif"],
+        body: ["var(--font-body)", "sans-serif"],
       },
       animation: {
         ticker: "ticker 30s linear infinite",

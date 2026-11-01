@@ -1,18 +1,17 @@
 import type { Metadata } from "next";
-import { Fraunces, DM_Sans } from "next/font/google";
+import { Archivo, Inter } from "next/font/google";
 import "./globals.css";
 
-const fraunces = Fraunces({
+const display = Archivo({
   subsets: ["latin"],
-  variable: "--font-fraunces",
-  weight: ["300", "400", "500", "600", "700", "900"],
-  style: ["normal", "italic"],
+  variable: "--font-display",
+  weight: ["500", "600", "700", "800", "900"],
 });
 
-const dmSans = DM_Sans({
+const body = Inter({
   subsets: ["latin"],
-  variable: "--font-dm-sans",
-  weight: ["300", "400", "500", "600", "700"],
+  variable: "--font-body",
+  weight: ["400", "500", "600", "700"],
 });
 
 export const metadata: Metadata = {
@@ -29,7 +28,7 @@ export default function RootLayout({
   return (
     <html lang="en" className="scroll-smooth">
       <body
-        className={`${fraunces.variable} ${dmSans.variable} font-dm-sans antialiased bg-cream text-ink`}
+        className={`${display.variable} ${body.variable} font-body antialiased bg-cream text-ink`}
       >
         {children}
       </body>

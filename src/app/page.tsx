@@ -28,12 +28,21 @@ const FADE = "opacity-0 translate-y-8 transition-all duration-700";
 function Eyebrow({ children, dark = false }: { children: React.ReactNode; dark?: boolean }) {
   return (
     <span
-      className={`inline-block text-xs font-dm-sans font-semibold px-3 py-1 rounded-full uppercase tracking-widest mb-4 ${
-        dark ? "bg-orange/20 text-orange" : "bg-orange/10 text-orange"
+      className={`inline-block text-xs font-body font-semibold px-3 py-1 rounded-md uppercase tracking-widest mb-4 ${
+        dark ? "bg-amber/15 text-amber" : "bg-ink text-amber"
       }`}
     >
       {children}
     </span>
+  );
+}
+
+function Logo() {
+  return (
+    <a href="#" className="flex items-center gap-2" aria-label="WindowSeat home">
+      <span className="w-7 h-7 rounded-md bg-amber text-ink flex items-center justify-center font-display font-black text-base leading-none" aria-hidden="true">↱</span>
+      <span className="font-display font-extrabold text-cream text-lg tracking-wide uppercase">WindowSeat</span>
+    </a>
   );
 }
 
@@ -60,17 +69,14 @@ function Nav() {
     <nav className={`fixed top-0 left-0 right-0 z-50 bg-ink transition-shadow duration-300 ${scrolled ? "shadow-xl" : ""}`}>
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-16">
-          <a href="#" className="font-fraunces text-xl font-black">
-            <span className="text-cream">Window</span>
-            <span className="text-amber italic">Seat</span>
-          </a>
+          <Logo />
           <div className="hidden md:flex items-center gap-8">
             {links.map((l) => (
-              <a key={l.href} href={l.href} className="text-cream/80 hover:text-cream text-sm font-dm-sans transition-colors">
+              <a key={l.href} href={l.href} className="text-cream/80 hover:text-cream text-sm font-body transition-colors">
                 {l.label}
               </a>
             ))}
-            <a href="#cta" className="bg-orange text-cream text-sm font-dm-sans font-semibold px-5 py-2.5 rounded-full hover:bg-orange/90 transition-colors">
+            <a href="#cta" className="bg-amber text-ink text-sm font-body font-semibold px-5 py-2.5 rounded-md hover:bg-amber/90 transition-colors">
               Ride Curious
             </a>
           </div>
@@ -83,11 +89,11 @@ function Nav() {
         {open && (
           <div className="md:hidden pb-4 flex flex-col gap-3">
             {links.map((l) => (
-              <a key={l.href} href={l.href} onClick={() => setOpen(false)} className="text-cream/80 hover:text-cream text-sm font-dm-sans px-2 py-1">
+              <a key={l.href} href={l.href} onClick={() => setOpen(false)} className="text-cream/80 hover:text-cream text-sm font-body px-2 py-1">
                 {l.label}
               </a>
             ))}
-            <a href="#cta" onClick={() => setOpen(false)} className="bg-orange text-cream text-sm font-dm-sans font-semibold px-5 py-2.5 rounded-full text-center">
+            <a href="#cta" onClick={() => setOpen(false)} className="bg-amber text-ink text-sm font-body font-semibold px-5 py-2.5 rounded-md text-center">
               Ride Curious
             </a>
           </div>
@@ -107,13 +113,13 @@ const OPTIONS = [
 function PickerCard() {
   const [active, setActive] = useState(0);
   return (
-    <div className="bg-[#0F0A05] rounded-2xl overflow-hidden border border-white/5">
+    <div className="bg-[#0B1B33] rounded-xl overflow-hidden border border-white/5">
       <div className="px-4 py-3 border-b border-white/10 flex items-center justify-between">
         <div>
-          <p className="text-amber text-xs font-dm-sans font-semibold uppercase tracking-widest">Add a Scenic Route?</p>
-          <p className="text-cream/50 text-xs font-dm-sans mt-0.5">JFK → Midtown · priced before you go</p>
+          <p className="text-amber text-xs font-body font-semibold uppercase tracking-widest">Add a Scenic Route?</p>
+          <p className="text-cream/50 text-xs font-body mt-0.5">JFK → Midtown · priced before you go</p>
         </div>
-        <span className="text-[10px] font-dm-sans text-cream/40 border border-white/10 rounded-full px-2 py-0.5">by WindowSeat</span>
+        <span className="text-[10px] font-body text-cream/40 border border-white/10 rounded-md px-2 py-0.5">by WindowSeat</span>
       </div>
       <div className="p-3 space-y-2">
         {OPTIONS.map((opt, i) => {
@@ -123,26 +129,26 @@ function PickerCard() {
               type="button"
               key={opt.label}
               onClick={() => setActive(i)}
-              className={`w-full text-left flex items-center justify-between p-3 rounded-xl border transition-colors ${on ? "bg-orange/20 border-orange/40" : "bg-white/5 border-white/5 hover:bg-white/10"}`}
+              className={`w-full text-left flex items-center justify-between p-3 rounded-xl border transition-colors ${on ? "bg-amber/15 border-amber/50" : "bg-white/5 border-white/5 hover:bg-white/10"}`}
             >
               <div>
-                <p className={`text-xs font-dm-sans font-semibold ${on ? "text-orange" : "text-cream/50"}`}>{opt.label}</p>
-                <p className={`text-sm font-dm-sans mt-0.5 ${on ? "text-cream" : "text-cream/60"}`}>{opt.place}</p>
-                {opt.sponsored && <p className="text-[10px] font-dm-sans text-amber/80 mt-0.5">Sponsored detour · ride covered</p>}
+                <p className={`text-xs font-body font-semibold ${on ? "text-amber" : "text-cream/50"}`}>{opt.label}</p>
+                <p className={`text-sm font-body mt-0.5 ${on ? "text-cream" : "text-cream/60"}`}>{opt.place}</p>
+                {opt.sponsored && <p className="text-[10px] font-body text-amber/80 mt-0.5">Sponsored detour · ride covered</p>}
               </div>
               <div className="text-right shrink-0 ml-3">
-                <span className={`block text-xs font-dm-sans font-semibold px-2.5 py-1 rounded-full ${on ? "bg-orange text-cream" : "bg-white/10 text-cream/40"}`}>{opt.time}</span>
-                <span className={`block text-xs font-dm-sans mt-1 ${opt.sponsored ? "text-amber" : on ? "text-cream" : "text-cream/40"}`}>{opt.price}</span>
+                <span className={`block text-xs font-body font-semibold px-2.5 py-1 rounded-md ${on ? "bg-amber text-ink" : "bg-white/10 text-cream/40"}`}>{opt.time}</span>
+                <span className={`block text-xs font-body mt-1 ${opt.sponsored ? "text-amber" : on ? "text-cream" : "text-cream/40"}`}>{opt.price}</span>
               </div>
             </button>
           );
         })}
       </div>
       <div className="px-3 pb-3">
-        <div className="w-full bg-orange text-cream text-sm font-dm-sans font-semibold rounded-xl py-2.5 text-center">
+        <div className="w-full bg-amber text-ink text-sm font-body font-semibold rounded-xl py-2.5 text-center">
           Add to my ride
         </div>
-        <p className="text-center text-[10px] font-dm-sans text-cream/30 mt-2">Illustrative pricing</p>
+        <p className="text-center text-[10px] font-body text-cream/30 mt-2">Illustrative pricing</p>
       </div>
     </div>
   );
@@ -150,25 +156,25 @@ function PickerCard() {
 
 function AudioBar() {
   return (
-    <div className="bg-[#0F0A05] rounded-2xl p-4 border border-white/5 mt-4">
+    <div className="bg-[#0B1B33] rounded-xl p-4 border border-white/5 mt-4">
       <div className="flex items-center gap-3 mb-3">
-        <div className="w-8 h-8 rounded-full bg-orange flex items-center justify-center text-sm text-cream">▶</div>
+        <div className="w-8 h-8 rounded-full bg-amber flex items-center justify-center text-sm text-cream">▶</div>
         <div>
-          <p className="text-cream text-sm font-dm-sans font-semibold">Look left in 20 seconds</p>
-          <p className="text-cream/50 text-xs font-dm-sans">Brooklyn Bridge — the 14-year build</p>
+          <p className="text-cream text-sm font-body font-semibold">Look left in 20 seconds</p>
+          <p className="text-cream/50 text-xs font-body">Brooklyn Bridge — the 14-year build</p>
         </div>
         <div className="ml-auto flex items-end gap-0.5 h-4">
-          <span className="dot1 w-1 h-3 bg-orange rounded-full inline-block" />
-          <span className="dot2 w-1 h-4 bg-orange rounded-full inline-block" />
-          <span className="dot3 w-1 h-2 bg-orange rounded-full inline-block" />
+          <span className="dot1 w-1 h-3 bg-amber rounded-full inline-block" />
+          <span className="dot2 w-1 h-4 bg-amber rounded-full inline-block" />
+          <span className="dot3 w-1 h-2 bg-amber rounded-full inline-block" />
         </div>
       </div>
       <div className="bg-white/10 rounded-full h-1.5 w-full">
-        <div className="bg-orange h-1.5 rounded-full w-2/5" />
+        <div className="bg-amber h-1.5 rounded-full w-2/5" />
       </div>
       <div className="flex justify-between mt-1">
-        <span className="text-cream/40 text-xs font-dm-sans">0:38</span>
-        <span className="text-cream/40 text-xs font-dm-sans">1:30</span>
+        <span className="text-cream/40 text-xs font-body">0:38</span>
+        <span className="text-cream/40 text-xs font-body">1:30</span>
       </div>
     </div>
   );
@@ -183,21 +189,21 @@ function Hero() {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-16 items-center">
           <div ref={leftRef} className={FADE}>
-            <span className="inline-block bg-amber/20 text-ink text-xs font-dm-sans font-semibold px-3 py-1 rounded-full uppercase tracking-widest mb-6">
+            <span className="inline-block bg-amber/20 text-ink text-xs font-body font-semibold px-3 py-1 rounded-md uppercase tracking-widest mb-6">
               Scenic Route · walk, bike or ride
             </span>
-            <h1 className="font-fraunces text-5xl md:text-6xl lg:text-7xl font-black text-ink leading-[1.05] text-balance mb-6">
+            <h1 className="font-display tracking-tight text-5xl md:text-6xl lg:text-7xl font-black text-ink leading-[1.05] text-balance mb-6">
               Take the long way.{" "}
-              <span className="italic text-orange">On purpose.</span>
+              <span className="text-orange">On purpose.</span>
             </h1>
-            <p className="font-dm-sans text-muted text-lg md:text-xl leading-relaxed mb-8 max-w-md">
+            <p className="font-body text-muted text-lg md:text-xl leading-relaxed mb-8 max-w-md">
               WindowSeat bends your walk, bike ride or rideshare past the landmarks worth seeing. A few minutes longer, often free thanks to a local sponsor, and narrated as you pass.
             </p>
             <div className="flex flex-col sm:flex-row gap-4">
-              <a href="#cta" className="bg-orange text-cream font-dm-sans font-semibold px-7 py-4 rounded-full text-center hover:bg-orange/90 transition-colors shadow-lg shadow-orange/25">
+              <a href="#cta" className="bg-amber text-ink font-body font-semibold px-7 py-4 rounded-md text-center hover:bg-amber/90 transition-colors shadow-lg shadow-ink/15">
                 Join the rider waitlist
               </a>
-              <a href="#sponsors" className="border-2 border-ink text-ink font-dm-sans font-semibold px-7 py-4 rounded-full text-center hover:bg-ink hover:text-cream transition-colors">
+              <a href="#sponsors" className="border-2 border-ink text-ink font-body font-semibold px-7 py-4 rounded-md text-center hover:bg-ink hover:text-cream transition-colors">
                 For tourism boards →
               </a>
             </div>
@@ -205,10 +211,10 @@ function Hero() {
 
           <div ref={rightRef} className={`${FADE} flex justify-center lg:justify-end`}>
             <div className="w-full max-w-sm">
-              <div className="bg-ink rounded-3xl p-5 shadow-2xl">
+              <div className="bg-ink rounded-xl p-5 shadow-2xl">
                 <div className="flex items-center justify-between mb-4">
-                  <span className="text-cream text-sm font-dm-sans font-semibold">Your ride · arriving in 3 min</span>
-                  <span className="text-cream/40 text-xs font-dm-sans">Toyota Camry</span>
+                  <span className="text-cream text-sm font-body font-semibold">Your ride · arriving in 3 min</span>
+                  <span className="text-cream/40 text-xs font-body">Toyota Camry</span>
                 </div>
                 <div className="relative h-36 rounded-xl overflow-hidden mb-4 bg-[#1a2535]">
                   <svg className="absolute inset-0 opacity-25" width="100%" height="100%">
@@ -223,14 +229,14 @@ function Hero() {
                     {/* fastest route */}
                     <path d="M 20 125 L 140 100 L 280 40" fill="none" stroke="#FAF3E0" strokeOpacity="0.35" strokeWidth="2.5" />
                     {/* scenic route */}
-                    <path d="M 20 125 Q 70 70 130 60 Q 190 50 210 20 Q 240 10 280 40" fill="none" stroke="#E8520A" strokeWidth="2.5" strokeDasharray="6 3" />
-                    <circle cx="20" cy="125" r="5" fill="#E8520A" />
-                    <circle cx="130" cy="60" r="5" fill="#F2A51A" />
+                    <path d="M 20 125 Q 70 70 130 60 Q 190 50 210 20 Q 240 10 280 40" fill="none" stroke="#FFC72C" strokeWidth="2.5" strokeDasharray="6 3" />
+                    <circle cx="20" cy="125" r="5" fill="#E4572E" />
+                    <circle cx="130" cy="60" r="5" fill="#FFC72C" />
                     <circle cx="280" cy="40" r="5" fill="#FAF3E0" />
                   </svg>
-                  <div className="absolute bottom-2 left-2 flex gap-2 text-[10px] font-dm-sans">
-                    <span className="bg-black/40 text-cream/70 px-2 py-0.5 rounded-full">— fastest</span>
-                    <span className="bg-black/40 text-orange px-2 py-0.5 rounded-full">- - scenic</span>
+                  <div className="absolute bottom-2 left-2 flex gap-2 text-[10px] font-body">
+                    <span className="bg-black/40 text-cream/70 px-2 py-0.5 rounded-md">— fastest</span>
+                    <span className="bg-black/40 text-amber px-2 py-0.5 rounded-md">- - scenic</span>
                   </div>
                 </div>
                 <PickerCard />
@@ -253,11 +259,11 @@ const LANDMARKS = [
 function Ticker() {
   const doubled = [...LANDMARKS, ...LANDMARKS];
   return (
-    <div className="bg-orange overflow-hidden py-3">
+    <div className="bg-amber overflow-hidden py-3">
       <div className="flex gap-12 whitespace-nowrap" style={{ animation: "ticker 30s linear infinite" }}>
         {doubled.map((name, i) => (
-          <span key={i} className="flex items-center gap-3 text-cream font-dm-sans font-semibold text-sm shrink-0">
-            <span className="w-1.5 h-1.5 rounded-full bg-cream/60 inline-block" />
+          <span key={i} className="flex items-center gap-3 text-ink font-body font-bold uppercase tracking-wider text-xs shrink-0">
+            <span className="w-1.5 h-1.5 rounded-full bg-ink/50 inline-block" />
             {name}
           </span>
         ))}
@@ -277,11 +283,11 @@ const HOW_STEPS = [
 function StepCard({ step }: { step: (typeof HOW_STEPS)[0] }) {
   const ref = useFadeUp();
   return (
-    <div ref={ref} className={`${FADE} bg-cream border border-ink/10 rounded-2xl p-6 hover:shadow-lg`}>
+    <div ref={ref} className={`${FADE} bg-cream border border-ink/10 rounded-xl p-6 hover:shadow-lg`}>
       <div className="text-4xl mb-4">{step.emoji}</div>
-      <div className="font-dm-sans text-orange text-xs font-bold uppercase tracking-widest mb-2">Step {step.step}</div>
-      <h3 className="font-fraunces text-xl font-bold text-ink mb-3">{step.title}</h3>
-      <p className="font-dm-sans text-muted text-sm leading-relaxed">{step.desc}</p>
+      <div className="font-body text-orange text-xs font-bold uppercase tracking-widest mb-2">Step {step.step}</div>
+      <h3 className="font-display tracking-tight text-xl font-bold text-ink mb-3">{step.title}</h3>
+      <p className="font-body text-muted text-sm leading-relaxed">{step.desc}</p>
     </div>
   );
 }
@@ -293,8 +299,8 @@ function HowItWorks() {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div ref={headRef} className={`${FADE} text-center mb-14 max-w-2xl mx-auto`}>
           <Eyebrow>How It Works</Eyebrow>
-          <h2 className="font-fraunces text-4xl md:text-5xl font-black text-ink mb-4">Inside the app you already use</h2>
-          <p className="font-dm-sans text-muted text-lg">No new app to download mid-trip. Scenic Route shows up inside the ride you&apos;re already taking.</p>
+          <h2 className="font-display tracking-tight text-4xl md:text-5xl font-black text-ink mb-4">Inside the app you already use</h2>
+          <p className="font-body text-muted text-lg">No new app to download mid-trip. Scenic Route shows up inside the ride you&apos;re already taking.</p>
         </div>
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
           {HOW_STEPS.map((s) => <StepCard key={s.step} step={s} />)}
@@ -323,16 +329,16 @@ function RerouteSection() {
         <div className="grid grid-cols-1 lg:grid-cols-5 gap-16 items-start">
           <div ref={leftRef} className={`${FADE} lg:col-span-3`}>
             <Eyebrow dark>The Reroute</Eyebrow>
-            <h2 className="font-fraunces text-4xl md:text-5xl font-black text-cream mb-4">Loosely on the way, never out of the way</h2>
-            <p className="font-fraunces text-xl italic text-amber mb-8 leading-snug">&ldquo;You were going from A to B anyway. We just made it worth the ride.&rdquo;</p>
+            <h2 className="font-display tracking-tight text-4xl md:text-5xl font-black text-cream mb-4">Loosely on the way, never out of the way</h2>
+            <p className="font-display tracking-tight text-xl font-semibold text-amber mb-8 leading-snug">&ldquo;You were going from A to B anyway. We just made it worth the ride.&rdquo;</p>
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
               {RULES.map((r) => (
                 <div key={r.title} className="bg-white/5 rounded-xl p-5">
                   <div className="flex items-center gap-3 mb-2">
                     <span className="text-xl">{r.icon}</span>
-                    <span className="font-dm-sans text-cream text-sm font-semibold">{r.title}</span>
+                    <span className="font-body text-cream text-sm font-semibold">{r.title}</span>
                   </div>
-                  <p className="font-dm-sans text-cream/60 text-sm leading-relaxed">{r.desc}</p>
+                  <p className="font-body text-cream/60 text-sm leading-relaxed">{r.desc}</p>
                 </div>
               ))}
             </div>
@@ -365,8 +371,8 @@ function Anywhere() {
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
           <div ref={headRef} className={FADE}>
             <Eyebrow>Scenic Route Anywhere</Eyebrow>
-            <h2 className="font-fraunces text-4xl md:text-5xl font-black text-ink mb-4">Not in a rideshare? Take the long way anyway.</h2>
-            <p className="font-dm-sans text-muted text-lg mb-8">
+            <h2 className="font-display tracking-tight text-4xl md:text-5xl font-black text-ink mb-4">Not in a rideshare? Take the long way anyway.</h2>
+            <p className="font-body text-muted text-lg mb-8">
               The WindowSeat app works on its own today. Pick a destination, choose a detour, and we open the route in the maps app you already use with the landmark added as a stop. The stories play from WindowSeat.
             </p>
             <div className="space-y-4">
@@ -374,15 +380,15 @@ function Anywhere() {
                 <div key={m.title} className="flex gap-4 items-start">
                   <span className="text-2xl w-10 h-10 rounded-full bg-ink/5 flex items-center justify-center shrink-0">{m.emoji}</span>
                   <div>
-                    <h3 className="font-fraunces text-lg font-bold text-ink">{m.title}</h3>
-                    <p className="font-dm-sans text-muted text-sm leading-relaxed">{m.desc}</p>
+                    <h3 className="font-display tracking-tight text-lg font-bold text-ink">{m.title}</h3>
+                    <p className="font-body text-muted text-sm leading-relaxed">{m.desc}</p>
                   </div>
                 </div>
               ))}
             </div>
           </div>
-          <div ref={flowRef} className={`${FADE} bg-ink rounded-3xl p-6 md:p-8`}>
-            <p className="font-dm-sans text-amber text-xs font-semibold uppercase tracking-widest mb-5">How it works without a partner</p>
+          <div ref={flowRef} className={`${FADE} bg-ink rounded-xl p-6 md:p-8`}>
+            <p className="font-body text-amber text-xs font-semibold uppercase tracking-widest mb-5">How it works without a partner</p>
             <ol className="space-y-5">
               {[
                 ["Where to?", "Enter where you're headed, or let us read it from your calendar or hotel booking."],
@@ -391,16 +397,16 @@ function Anywhere() {
                 ["Listen as you pass", "Stories start when you get close, whether you're walking, biking or driving."],
               ].map(([t, d], i) => (
                 <li key={t} className="flex gap-4">
-                  <span className="font-fraunces text-2xl font-black text-orange w-6 shrink-0">{i + 1}</span>
+                  <span className="font-display tracking-tight text-2xl font-black text-amber w-6 shrink-0">{i + 1}</span>
                   <div>
-                    <p className="font-dm-sans text-cream font-semibold">{t}</p>
-                    <p className="font-dm-sans text-cream/60 text-sm leading-relaxed">{d}</p>
+                    <p className="font-body text-cream font-semibold">{t}</p>
+                    <p className="font-body text-cream/60 text-sm leading-relaxed">{d}</p>
                   </div>
                 </li>
               ))}
             </ol>
             <div className="mt-6 pt-5 border-t border-white/10">
-              <p className="font-dm-sans text-cream/70 text-sm leading-relaxed">
+              <p className="font-body text-cream/70 text-sm leading-relaxed">
                 <span className="text-amber font-semibold">Why it matters: </span>
                 every detour someone takes on foot or by bike shows that people will take the long way, and that&apos;s the case we bring to ride platforms.
               </p>
@@ -426,25 +432,25 @@ function Sponsors() {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div ref={headRef} className={`${FADE} max-w-2xl mb-12`}>
           <Eyebrow>For Tourism Boards &amp; Sponsors</Eyebrow>
-          <h2 className="font-fraunces text-4xl md:text-5xl font-black text-ink mb-4">Put your city&apos;s best block on the route</h2>
-          <p className="font-dm-sans text-muted text-lg">
+          <h2 className="font-display tracking-tight text-4xl md:text-5xl font-black text-ink mb-4">Put your city&apos;s best block on the route</h2>
+          <p className="font-body text-muted text-lg">
             Sponsor a Scenic Route and the detour is free for the traveler, whether they&apos;re walking, biking or in a ride. You get visitors past the places that matter to you, and proof that they went.
           </p>
         </div>
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-10">
           {SPONSOR_POINTS.map((p) => (
-            <div key={p.title} className="bg-cream rounded-2xl p-6 border border-ink/10">
-              <span className="text-orange text-xs font-dm-sans font-bold uppercase tracking-widest">{p.stat}</span>
-              <h3 className="font-fraunces text-xl font-bold text-ink mt-2 mb-2">{p.title}</h3>
-              <p className="font-dm-sans text-muted text-sm leading-relaxed">{p.desc}</p>
+            <div key={p.title} className="bg-cream rounded-xl p-6 border border-ink/10">
+              <span className="text-orange text-xs font-body font-bold uppercase tracking-widest">{p.stat}</span>
+              <h3 className="font-display tracking-tight text-xl font-bold text-ink mt-2 mb-2">{p.title}</h3>
+              <p className="font-body text-muted text-sm leading-relaxed">{p.desc}</p>
             </div>
           ))}
         </div>
         <div className="flex flex-col sm:flex-row gap-4 items-start sm:items-center">
-          <a href="#cta" className="bg-ink text-cream font-dm-sans font-semibold px-7 py-4 rounded-full hover:bg-ink/90 transition-colors">
+          <a href="#cta" className="bg-ink text-cream font-body font-semibold px-7 py-4 rounded-md hover:bg-ink/90 transition-colors">
             Start a New York pilot →
           </a>
-          <p className="font-dm-sans text-muted text-sm">Now booking 3-month pilots with tourism offices, museums and hotels.</p>
+          <p className="font-body text-muted text-sm">Now booking 3-month pilots with tourism offices, museums and hotels.</p>
         </div>
       </div>
     </section>
@@ -467,22 +473,22 @@ function Platforms() {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div ref={headRef} className={`${FADE} max-w-2xl mb-14`}>
           <Eyebrow>For Platforms</Eyebrow>
-          <h2 className="font-fraunces text-4xl md:text-5xl font-black text-ink mb-4">A plug-in, not a new app</h2>
-          <p className="font-dm-sans text-muted text-lg">
+          <h2 className="font-display tracking-tight text-4xl md:text-5xl font-black text-ink mb-4">A plug-in, not a new app</h2>
+          <p className="font-body text-muted text-lg">
             Your app already shows riders what&apos;s around them. WindowSeat takes the next step and routes them past it, as an SDK built for rideshare apps.
           </p>
         </div>
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 items-start">
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
             {PLATFORM_POINTS.map((p) => (
-              <div key={p.title} className="border border-ink/10 rounded-2xl p-5 bg-white/40">
-                <h3 className="font-fraunces text-lg font-bold text-ink mb-2">{p.title}</h3>
-                <p className="font-dm-sans text-muted text-sm leading-relaxed">{p.desc}</p>
+              <div key={p.title} className="border border-ink/10 rounded-xl p-5 bg-white/40">
+                <h3 className="font-display tracking-tight text-lg font-bold text-ink mb-2">{p.title}</h3>
+                <p className="font-body text-muted text-sm leading-relaxed">{p.desc}</p>
               </div>
             ))}
           </div>
-          <div ref={codeRef} className={`${FADE} bg-ink rounded-2xl p-5 overflow-x-auto`}>
-            <p className="font-dm-sans text-amber text-xs font-semibold uppercase tracking-widest mb-3">One call at booking</p>
+          <div ref={codeRef} className={`${FADE} bg-ink rounded-xl p-5 overflow-x-auto`}>
+            <p className="font-body text-amber text-xs font-semibold uppercase tracking-widest mb-3">One call at booking</p>
             <pre className="text-[12px] leading-relaxed text-cream/80 font-mono whitespace-pre">
 {`POST /v1/scenic-routes
 {
@@ -509,7 +515,7 @@ function Platforms() {
   ]
 }`}
             </pre>
-            <p className="font-dm-sans text-cream/40 text-xs mt-3">You price it, show it, and send the waypoint to the driver. We handle routes, landmarks and stories.</p>
+            <p className="font-body text-cream/40 text-xs mt-3">You price it, show it, and send the waypoint to the driver. We handle routes, landmarks and stories.</p>
           </div>
         </div>
       </div>
@@ -539,32 +545,32 @@ function BusinessModel() {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div ref={headRef} className={`${FADE} text-center mb-14 max-w-2xl mx-auto`}>
           <Eyebrow dark>The Model</Eyebrow>
-          <h2 className="font-fraunces text-4xl md:text-5xl font-black text-cream">Who pays for the long way</h2>
+          <h2 className="font-display tracking-tight text-4xl md:text-5xl font-black text-cream">Who pays for the long way</h2>
         </div>
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-12">
           {PAYERS.map((p) => (
-            <div key={p.title} className="bg-white/5 rounded-2xl p-6 border border-white/5">
-              <span className="text-orange text-xs font-dm-sans font-bold uppercase tracking-widest">{p.tag}</span>
-              <h3 className="font-fraunces text-2xl font-bold text-cream mt-2 mb-3">{p.title}</h3>
-              <p className="font-dm-sans text-cream/60 text-sm leading-relaxed">{p.desc}</p>
+            <div key={p.title} className="bg-white/5 rounded-xl p-6 border border-white/5">
+              <span className="text-amber text-xs font-body font-bold uppercase tracking-widest">{p.tag}</span>
+              <h3 className="font-display tracking-tight text-2xl font-bold text-cream mt-2 mb-3">{p.title}</h3>
+              <p className="font-body text-cream/60 text-sm leading-relaxed">{p.desc}</p>
             </div>
           ))}
         </div>
-        <div ref={splitRef} className={`${FADE} bg-white/5 rounded-2xl p-6 md:p-8 border border-white/5 max-w-3xl mx-auto`}>
-          <p className="font-dm-sans text-amber text-xs font-semibold uppercase tracking-widest mb-1">Example</p>
-          <h3 className="font-fraunces text-xl font-bold text-cream mb-5">One $10 sponsored detour</h3>
+        <div ref={splitRef} className={`${FADE} bg-white/5 rounded-xl p-6 md:p-8 border border-white/5 max-w-3xl mx-auto`}>
+          <p className="font-body text-amber text-xs font-semibold uppercase tracking-widest mb-1">Example</p>
+          <h3 className="font-display tracking-tight text-xl font-bold text-cream mb-5">One $10 sponsored detour</h3>
           <div className="flex h-3 rounded-full overflow-hidden mb-5">
             {SPLIT.map((s) => <div key={s.label} className={`${s.w} ${s.c}`} />)}
           </div>
           <div className="space-y-2">
             {SPLIT.map((s) => (
-              <div key={s.label} className="flex items-center justify-between font-dm-sans text-sm">
+              <div key={s.label} className="flex items-center justify-between font-body text-sm">
                 <span className="flex items-center gap-2 text-cream/70"><span className={`w-2.5 h-2.5 rounded-full ${s.c}`} />{s.label}</span>
                 <span className="text-cream font-semibold">{s.amt}</span>
               </div>
             ))}
           </div>
-          <p className="font-dm-sans text-cream/40 text-xs mt-5">Illustrative numbers. Real splits are set with each platform.</p>
+          <p className="font-body text-cream/40 text-xs mt-5">Illustrative numbers. Real splits are set with each platform.</p>
         </div>
       </div>
     </section>
@@ -584,7 +590,7 @@ const CITIES = [
 function CityCard({ city }: { city: (typeof CITIES)[0] }) {
   const ref = useFadeUp();
   return (
-    <div ref={ref} className={`${FADE} bg-cream border border-ink/10 rounded-2xl overflow-hidden hover:shadow-xl hover:-translate-y-1 hover:duration-200`}>
+    <div ref={ref} className={`${FADE} bg-cream border border-ink/10 rounded-xl overflow-hidden hover:shadow-xl hover:-translate-y-1 hover:duration-200`}>
       <div className="h-40 bg-ink relative overflow-hidden">
         <svg viewBox="0 0 100 70" preserveAspectRatio="xMidYMax meet" className="absolute bottom-0 left-0 w-full h-full" xmlns="http://www.w3.org/2000/svg">
           <path d={city.skyline + " L90,70 L10,70 Z"} fill="#FAF3E0" opacity="0.08" />
@@ -593,16 +599,16 @@ function CityCard({ city }: { city: (typeof CITIES)[0] }) {
         <div className="absolute top-4 left-4 text-3xl">{city.emoji}</div>
         <div className="absolute bottom-4 right-4">
           {city.status === "launch"
-            ? <span className="bg-orange text-cream text-xs font-dm-sans font-bold px-3 py-1 rounded-full">Launch city</span>
-            : <span className="bg-amber text-ink text-xs font-dm-sans font-bold px-3 py-1 rounded-full">Coming later</span>}
+            ? <span className="bg-amber text-ink text-xs font-body font-bold px-3 py-1 rounded-md">Launch city</span>
+            : <span className="bg-amber text-ink text-xs font-body font-bold px-3 py-1 rounded-md">Coming later</span>}
         </div>
       </div>
       <div className="p-5">
-        <h3 className="font-fraunces text-xl font-bold text-ink mb-2">{city.name}</h3>
-        <p className="font-dm-sans text-muted text-sm leading-relaxed mb-4">{city.desc}</p>
+        <h3 className="font-display tracking-tight text-xl font-bold text-ink mb-2">{city.name}</h3>
+        <p className="font-body text-muted text-sm leading-relaxed mb-4">{city.desc}</p>
         <div className="flex flex-wrap gap-2">
           {city.landmarks.map((l) => (
-            <span key={l} className="text-xs font-dm-sans text-muted bg-ink/5 px-2.5 py-1 rounded-full">{l}</span>
+            <span key={l} className="text-xs font-body text-muted bg-ink/5 px-2.5 py-1 rounded-md">{l}</span>
           ))}
         </div>
       </div>
@@ -617,7 +623,7 @@ function Cities() {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div ref={headRef} className={`${FADE} text-center mb-14`}>
           <Eyebrow>Cities</Eyebrow>
-          <h2 className="font-fraunces text-4xl md:text-5xl font-black text-ink">Where the long way is worth it</h2>
+          <h2 className="font-display tracking-tight text-4xl md:text-5xl font-black text-ink">Where the long way is worth it</h2>
         </div>
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
           {CITIES.map((city) => <CityCard key={city.name} city={city} />)}
@@ -650,15 +656,15 @@ function Comparison() {
       <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
         <div ref={headRef} className={`${FADE} text-center mb-12`}>
           <Eyebrow dark>Why WindowSeat</Eyebrow>
-          <h2 className="font-fraunces text-4xl md:text-5xl font-black text-cream">Built for the trip you’re already taking</h2>
+          <h2 className="font-display tracking-tight text-4xl md:text-5xl font-black text-cream">Built for the trip you’re already taking</h2>
         </div>
-        <div ref={tableRef} className={`${FADE} overflow-x-auto rounded-2xl border border-white/10`}>
+        <div ref={tableRef} className={`${FADE} overflow-x-auto rounded-xl border border-white/10`}>
           <table className="w-full min-w-[560px]">
             <thead>
               <tr>
-                <th className="text-left p-4 font-dm-sans text-cream/50 text-sm font-medium border-b border-white/10">Feature</th>
+                <th className="text-left p-4 font-body text-cream/50 text-sm font-medium border-b border-white/10">Feature</th>
                 {COLUMNS.map((c) => (
-                  <th key={c.name} className={`p-4 text-center font-dm-sans text-sm font-semibold border-b border-white/10 ${c.highlight ? "bg-orange/20 text-orange" : "text-cream/60"}`}>
+                  <th key={c.name} className={`p-4 text-center font-body text-sm font-semibold border-b border-white/10 ${c.highlight ? "bg-amber/15 text-amber" : "text-cream/60"}`}>
                     {c.name}
                   </th>
                 ))}
@@ -667,11 +673,11 @@ function Comparison() {
             <tbody>
               {TABLE_FEATURES.map((feature, fi) => (
                 <tr key={feature} className="border-b border-white/5 last:border-0">
-                  <td className="p-4 font-dm-sans text-cream/70 text-sm">{feature}</td>
+                  <td className="p-4 font-body text-cream/70 text-sm">{feature}</td>
                   {COLUMNS.map((c) => (
-                    <td key={c.name} className={`p-4 text-center ${c.highlight ? "bg-orange/10" : ""}`}>
+                    <td key={c.name} className={`p-4 text-center ${c.highlight ? "bg-amber/10" : ""}`}>
                       {c.values[fi]
-                        ? <span className={`text-lg ${c.highlight ? "text-orange" : "text-green-400"}`}>✓</span>
+                        ? <span className={`text-lg ${c.highlight ? "text-amber" : "text-green-400"}`}>✓</span>
                         : <span className="text-cream/20 text-lg">✗</span>}
                     </td>
                   ))}
@@ -723,27 +729,27 @@ function CTASection() {
     }
   }
 
-  const input = "w-full px-5 py-4 rounded-full bg-cream text-ink font-dm-sans placeholder:text-muted focus:outline-none focus:ring-2 focus:ring-cream/50";
+  const input = "w-full px-5 py-4 rounded-md bg-cream text-ink font-body placeholder:text-muted focus:outline-none focus:ring-2 focus:ring-ink/40";
 
   return (
-    <section id="cta" className="py-24 md:py-32 bg-orange">
+    <section id="cta" className="py-24 md:py-32 bg-amber">
       <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
         <div ref={ref} className={FADE}>
-          <h2 className="font-fraunces text-5xl md:text-6xl lg:text-7xl font-black text-cream leading-[1.05] mb-4">
-            Same ride.{" "}<span className="italic">Better view.</span>
+          <h2 className="font-display tracking-tight text-5xl md:text-6xl lg:text-7xl font-black text-ink leading-[1.05] mb-4">
+            Same ride.{" "}<span className="underline decoration-ink decoration-[6px] underline-offset-8">Better view.</span>
           </h2>
-          <p className="font-dm-sans text-cream/80 text-lg mb-8">
+          <p className="font-body text-ink/80 text-lg mb-8">
             Travelers: be first to try Scenic Route in New York. Tourism boards, museums, hotels and platforms: let&apos;s set up a pilot.
           </p>
           {status === "success" ? (
-            <div className="bg-cream/20 border border-cream/30 rounded-2xl p-8">
+            <div className="bg-ink/10 border border-ink/20 rounded-xl p-8">
               <div className="text-4xl mb-3">🎉</div>
-              <p className="font-fraunces text-2xl font-bold text-cream mb-1">{message}</p>
-              <p className="font-dm-sans text-cream/80 text-sm">We&apos;ll be in touch soon.</p>
+              <p className="font-display tracking-tight text-2xl font-bold text-ink mb-1">{message}</p>
+              <p className="font-body text-ink/80 text-sm">We&apos;ll be in touch soon.</p>
             </div>
           ) : (
             <form onSubmit={handleSubmit} className="flex flex-col gap-4 max-w-md mx-auto">
-              <div className="grid grid-cols-2 bg-ink/20 rounded-full p-1" role="radiogroup" aria-label="I am a">
+              <div className="grid grid-cols-2 bg-ink/10 rounded-md p-1" role="radiogroup" aria-label="I am a">
                 {(["rider", "partner"] as Role[]).map((r) => (
                   <button
                     key={r}
@@ -751,7 +757,7 @@ function CTASection() {
                     role="radio"
                     aria-checked={role === r}
                     onClick={() => setRole(r)}
-                    className={`py-2.5 rounded-full font-dm-sans text-sm font-semibold transition-colors ${role === r ? "bg-cream text-ink" : "text-cream/80"}`}
+                    className={`py-2.5 rounded-md font-body text-sm font-semibold transition-colors ${role === r ? "bg-ink text-cream" : "text-ink/80"}`}
                   >
                     {r === "rider" ? "I'm a traveler" : "I'm a sponsor or partner"}
                   </button>
@@ -765,12 +771,12 @@ function CTASection() {
               <button
                 type="submit"
                 disabled={status === "loading"}
-                className="w-full px-7 py-4 rounded-full bg-ink text-cream font-dm-sans font-semibold text-base hover:bg-ink/90 transition-colors disabled:opacity-60"
+                className="w-full px-7 py-4 rounded-md bg-ink text-cream font-body font-semibold text-base hover:bg-ink/90 transition-colors disabled:opacity-60"
               >
                 {status === "loading" ? "Sending…" : role === "rider" ? "Join the waitlist →" : "Talk about a pilot →"}
               </button>
               {status === "error" && (
-                <p className="font-dm-sans text-cream/90 text-sm bg-ink/20 rounded-xl px-4 py-2">{message}</p>
+                <p className="font-body text-ink text-sm bg-ink/10 rounded-xl px-4 py-2">{message}</p>
               )}
             </form>
           )}
@@ -785,11 +791,8 @@ function Footer() {
   return (
     <footer className="bg-ink py-10">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col sm:flex-row items-center justify-between gap-4">
-        <a href="#" className="font-fraunces text-xl font-black">
-          <span className="text-cream">Window</span>
-          <span className="text-amber italic">Seat</span>
-        </a>
-        <p className="font-dm-sans text-cream/40 text-xs text-center sm:text-right max-w-md">
+        <Logo />
+        <p className="font-body text-cream/40 text-xs text-center sm:text-right max-w-md">
           © {new Date().getFullYear()} WindowSeat. A concept in development. WindowSeat is not affiliated with or endorsed by Uber or Lyft.
         </p>
       </div>
