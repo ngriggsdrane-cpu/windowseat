@@ -197,7 +197,7 @@ function Hero() {
               <span className="text-orange">On purpose.</span>
             </h1>
             <p className="font-body text-muted text-lg md:text-xl leading-relaxed mb-8 max-w-md">
-              WindowSeat bends your walk, bike ride or rideshare past the landmarks worth seeing. A few minutes longer, often free thanks to a local sponsor, and narrated as you pass.
+              WindowSeat bends your walk, bike ride or rideshare past the landmarks worth seeing. Always free on foot or by bike. In a ride, you pay only the extra minutes, and often nothing when a local sponsor covers it.
             </p>
             <div className="flex flex-col sm:flex-row gap-4">
               <a href="#cta" className="bg-amber text-ink font-body font-semibold px-7 py-4 rounded-md text-center hover:bg-amber/90 transition-colors shadow-lg shadow-ink/15">
@@ -448,7 +448,7 @@ function Live() {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-start">
           <div ref={leftRef} className={FADE}>
-            <Eyebrow dark>Upgrade · WindowSeat Live</Eyebrow>
+            <Eyebrow dark>WindowSeat Live · Free</Eyebrow>
             <h2 className="font-display tracking-tight text-4xl md:text-5xl font-black text-cream mb-4">A guide that keeps pace with you</h2>
             <p className="font-body text-cream/70 text-lg mb-8">
               Tell it how long you have and where you&apos;re going. Live builds a tour from short, fact-checked audio clips and plays each one as you reach it, so the history, the details and the route all fit your walk.
@@ -466,14 +466,14 @@ function Live() {
             </div>
             <div className="grid grid-cols-2 gap-4 max-w-md">
               <div className="border border-white/15 rounded-xl p-4">
-                <p className="font-body text-cream/50 text-xs uppercase tracking-widest mb-1">Free</p>
-                <p className="font-display text-cream text-lg font-bold">Story detours</p>
-                <p className="font-body text-cream/60 text-xs mt-1">One story per stop on every Scenic Route.</p>
+                <p className="font-body text-amber text-xs uppercase tracking-widest mb-1">Walk or bike</p>
+                <p className="font-display text-cream text-lg font-bold">Always free</p>
+                <p className="font-body text-cream/60 text-xs mt-1">Every story and the full Live guide, no pass or subscription.</p>
               </div>
-              <div className="border-2 border-amber rounded-xl p-4">
-                <p className="font-body text-amber text-xs uppercase tracking-widest mb-1">Live</p>
-                <p className="font-display text-cream text-lg font-bold">$2.99 a day</p>
-                <p className="font-body text-cream/60 text-xs mt-1">or $6.99 for a week. Sometimes free, courtesy of a sponsor.</p>
+              <div className="border border-white/15 rounded-xl p-4">
+                <p className="font-body text-amber text-xs uppercase tracking-widest mb-1">In a ride</p>
+                <p className="font-display text-cream text-lg font-bold">Only the extra fare</p>
+                <p className="font-body text-cream/60 text-xs mt-1">At the ride app&apos;s normal rates, and free when a sponsor covers it.</p>
               </div>
             </div>
           </div>
@@ -624,10 +624,10 @@ function Platforms() {
 
 // ── Business model ────────────────────────────────────────────────────────────
 const PAYERS = [
-  { tag: "Rider pays", title: "Rider upgrade", desc: "The rider pays the extra time and distance at the platform's usual rates. WindowSeat earns a small fee per completed detour from the platform." },
+  { tag: "Rider pays", title: "The extra fare", desc: "In a ride, the rider pays only the extra time and distance at the platform's normal rates, with no added fee. The platform shares part of that extra fare with WindowSeat." },
   { tag: "Sponsor pays", title: "Sponsored detours", desc: "A tourism board, museum, hotel or brand covers the ride past its landmark and pays a premium on top. The platform and WindowSeat share it." },
   { tag: "Partner pays", title: "Licensing & insight", desc: "A per-city license for routes and narration, plus anonymized reports for tourism boards on which landmarks riders choose, and when." },
-  { tag: "You pay (optional)", title: "WindowSeat Live", desc: "Story detours are free. The full guide that fits your time and route is $2.99 a day or $6.99 a week, and sponsors can make it free for a weekend." },
+  { tag: "Travelers pay nothing", title: "Free on foot and by bike", desc: "Walking and biking tours, including the full Live guide, are free. Every walk taken is proof for sponsors and platforms, and sponsored walks earn per detour." },
 ];
 
 const SPLIT = [
