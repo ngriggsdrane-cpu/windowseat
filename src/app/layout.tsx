@@ -17,7 +17,7 @@ const body = Inter({
 export const metadata: Metadata = {
   title: "WindowSeat — Take the long way. On purpose.",
   description:
-    "Scenic Route for rideshare, walking and biking: short detours past the landmarks worth seeing, priced upfront and narrated as you pass.",
+    "Short, narrated detours past the landmarks worth seeing, on foot, by bike or in a ride. Free for travelers.",
 };
 
 export default function RootLayout({
