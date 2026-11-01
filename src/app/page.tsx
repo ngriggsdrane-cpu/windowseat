@@ -202,7 +202,7 @@ function Preview() {
   return (
     <div className="bg-ink rounded-xl p-4 sm:p-5 shadow-2xl">
       <div className="flex items-center justify-between mb-3">
-        <p className="font-body text-cream text-sm font-semibold">JFK → Midtown</p>
+        <p className="font-body text-cream text-sm font-semibold"><span className="text-amber">Destination</span> · JFK → Midtown</p>
         <div className="grid grid-cols-2 bg-white/10 rounded-md p-0.5" role="tablist" aria-label="Route type">
           {(["fastest", "scenic"] as const).map((m) => (
             <button
@@ -272,9 +272,19 @@ function Hero() {
               <span className="block">No time for a tour?</span>
               <span className="block text-orange">Take the scenic&nbsp;route.</span>
             </h1>
-            <p className="font-body text-muted text-lg md:text-xl leading-relaxed mb-6 max-w-lg">
+            <p className="font-body text-muted text-lg md:text-xl leading-relaxed mb-5 max-w-lg">
               Turn the journey you&apos;re already taking into a chance to discover something new. Scenic routes, memorable landmarks and local stories, all on your way.
             </p>
+            <dl className="grid grid-cols-1 sm:grid-cols-2 gap-3 mb-6 max-w-lg">
+              <div className="bg-white/70 border border-ink/10 rounded-md px-4 py-3">
+                <dt className="font-display text-ink font-extrabold">Loop</dt>
+                <dd className="font-body text-muted text-sm">Got an hour? See the neighborhood and end up back where you started.</dd>
+              </div>
+              <div className="bg-white/70 border border-ink/10 rounded-md px-4 py-3">
+                <dt className="font-display text-ink font-extrabold">Destination</dt>
+                <dd className="font-body text-muted text-sm">Headed to a meeting? Take the scenic way there.</dd>
+              </div>
+            </dl>
             <p className="font-body text-ink text-sm mb-8 max-w-lg border-l-4 border-amber pl-3">
               <span className="font-semibold">Free during early access.</span> On a ride, any extra minutes are charged by your ride provider.
             </p>
@@ -323,11 +333,11 @@ function Ticker() {
 
 // ── How it works ─────────────────────────────────────────────────────────────
 const QUEUE = [
-  { place: "Washington Street view", secs: 20, state: "done" },
-  { place: "Brooklyn Bridge Park", secs: 60, state: "playing" },
-  { place: "Onto the bridge walkway", secs: 30, state: "next" },
-  { place: "The bridge towers", secs: 75, state: "next" },
-  { place: "City Hall Park", secs: 20, state: "next" },
+  { place: "City Hall Park", secs: 20, state: "done" },
+  { place: "Onto the bridge walkway", secs: 30, state: "done" },
+  { place: "The bridge towers", secs: 75, state: "playing" },
+  { place: "DUMBO's Washington Street", secs: 60, state: "next" },
+  { place: "Back over the bridge", secs: 45, state: "next" },
 ];
 
 function fmt(secs: number) {
@@ -336,8 +346,8 @@ function fmt(secs: number) {
 }
 
 const STEPS = [
-  { n: "1", title: "Tell us where you're going", desc: "Add your destination and how much extra time you have." },
-  { n: "2", title: "Compare routes", desc: "See the fastest route next to a scenic one, with landmarks marked." },
+  { n: "1", title: "Choose Loop or Destination", desc: "Loop brings you back to where you started. Destination takes you somewhere, the scenic way." },
+  { n: "2", title: "Set your time", desc: "Tell us how long you have, or how many extra minutes to add. Your route appears with landmarks marked." },
   { n: "3", title: "Head out and listen", desc: "Short stories play as you go. Pause or skip anytime." },
 ];
 
@@ -366,10 +376,10 @@ function HowItWorks() {
           <div ref={rightRef} className={`${FADE} flex justify-center lg:justify-end`}>
             <div className="w-full max-w-sm bg-[#0B1B33] rounded-xl p-5 border border-white/10">
               <div className="flex items-center justify-between mb-1">
-                <span className="font-body text-cream text-sm font-semibold">DUMBO → City Hall · on foot</span>
+                <span className="font-body text-cream text-sm font-semibold"><span className="text-amber">Loop</span> · City Hall and back</span>
                 <span className="font-body text-[10px] text-cream/70 bg-white/10 rounded-md px-2 py-0.5 font-semibold uppercase tracking-wider">Simulated</span>
               </div>
-              <p className="font-body text-cream/50 text-xs mb-4">+10 minutes of extra time</p>
+              <p className="font-body text-cream/50 text-xs mb-4">On foot · 60 minutes</p>
               <ol className="space-y-2">
                 {QUEUE.map((c) => (
                   <li key={c.place} className={`flex items-center justify-between rounded-lg px-3 py-2.5 border ${c.state === "playing" ? "bg-amber/15 border-amber/50" : "bg-white/5 border-white/5"}`}>
