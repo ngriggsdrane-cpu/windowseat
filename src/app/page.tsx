@@ -103,7 +103,7 @@ function Nav() {
 // ── In-app Scenic Route card (what a rider sees inside the rideshare app) ────
 const OPTIONS = [
   { label: "The Icon", place: "Brooklyn Bridge", time: "+12 min", price: "+$8.40", sponsored: false },
-  { label: "The Hidden Gem", place: "DUMBO's Washington St", time: "+9 min", price: "Free", sponsored: true },
+  { label: "The Hidden Gem", place: "DUMBO's Washington St", time: "+9 min", price: "+$6.10", sponsored: false },
   { label: "The View", place: "Queensboro skyline approach", time: "+4 min", price: "+$2.90", sponsored: false },
 ];
 
@@ -152,12 +152,6 @@ function PickerCard() {
 }
 
 // ── Hero ─────────────────────────────────────────────────────────────────────
-const PRICES = [
-  { mode: "Walk or bike", price: "Free" },
-  { mode: "In a ride", price: "Extra fare only" },
-  { mode: "Sponsored", price: "Free" },
-];
-
 function Hero() {
   const leftRef = useFadeUp();
   const rightRef = useFadeUp();
@@ -166,21 +160,17 @@ function Hero() {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-16 items-center">
           <div ref={leftRef} className={FADE}>
-            <h1 className="font-display tracking-tight text-[2.6rem] sm:text-5xl md:text-6xl font-black text-ink leading-[1.05] mb-5">
+            <h1 className="font-display tracking-tight text-[2.6rem] sm:text-5xl md:text-[3.4rem] xl:text-6xl font-black text-ink leading-[1.05] mb-5">
               <span className="block">No time for a tour?</span>
               <span className="block text-orange">Take the scenic&nbsp;route.</span>
             </h1>
             <p className="font-body text-muted text-lg md:text-xl leading-relaxed mb-8 max-w-md">
               Short, narrated detours past the landmarks worth seeing, on foot, by bike or in your Uber or Lyft.
             </p>
-            <dl className="grid grid-cols-3 gap-3 mb-8 max-w-md">
-              {PRICES.map((p) => (
-                <div key={p.mode} className="border-l-4 border-amber pl-3">
-                  <dt className="font-body text-muted text-xs uppercase tracking-wider">{p.mode}</dt>
-                  <dd className="font-display text-ink text-lg font-extrabold leading-tight">{p.price}</dd>
-                </div>
-              ))}
-            </dl>
+            <div className="border-l-4 border-amber pl-4 mb-8 max-w-md">
+              <p className="font-display text-ink text-xl font-extrabold leading-tight">Free to use. No added fees, ever.</p>
+              <p className="font-body text-muted text-sm mt-1">Walking and biking cost nothing. In a ride, you pay only the extra minutes at your normal fare.</p>
+            </div>
             <div className="flex flex-col sm:flex-row gap-4">
               <a href="#cta" className="bg-amber text-ink font-body font-semibold px-7 py-4 rounded-md text-center hover:bg-amber/90 transition-colors shadow-lg shadow-ink/15">
                 Get early access
@@ -194,28 +184,54 @@ function Hero() {
           <div ref={rightRef} className={`${FADE} flex justify-center lg:justify-end`}>
             <div className="w-full max-w-sm">
               <div className="bg-ink rounded-xl p-5 shadow-2xl">
-                <div className="relative h-36 rounded-xl overflow-hidden mb-4 bg-[#1a2535]">
-                  <svg className="absolute inset-0 opacity-25" width="100%" height="100%">
-                    <defs>
-                      <pattern id="grid" width="20" height="20" patternUnits="userSpaceOnUse">
-                        <path d="M 20 0 L 0 0 0 20" fill="none" stroke="#4a7fcb" strokeWidth="0.5" />
-                      </pattern>
-                    </defs>
-                    <rect width="100%" height="100%" fill="url(#grid)" />
-                  </svg>
-                  <svg className="absolute inset-0" viewBox="0 0 300 144" preserveAspectRatio="none" width="100%" height="100%">
+                <div className="relative rounded-xl overflow-hidden mb-4 bg-[#16294A]">
+                  <svg viewBox="0 0 320 180" className="w-full h-auto block" role="img" aria-label="Map: the fastest route from JFK to Midtown versus the scenic route over the Brooklyn Bridge">
+                    {/* water: East River + harbor */}
+                    <path d="M158,0 C150,55 128,100 78,180 L110,180 C152,108 172,60 182,0 Z" fill="#244B7A" />
+                    <path d="M0,128 C30,140 60,155 82,180 L0,180 Z" fill="#244B7A" />
                     {/* fastest route */}
-                    <path d="M 20 125 L 140 100 L 280 40" fill="none" stroke="#FAF3E0" strokeOpacity="0.35" strokeWidth="2.5" />
+                    <path d="M292,156 L240,96 L176,40 L104,38" fill="none" stroke="#F7F7F2" strokeOpacity="0.3" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round" />
                     {/* scenic route */}
-                    <path d="M 20 125 Q 70 70 130 60 Q 190 50 210 20 Q 240 10 280 40" fill="none" stroke="#FFC72C" strokeWidth="2.5" strokeDasharray="6 3" />
-                    <circle cx="20" cy="125" r="5" fill="#E4572E" />
-                    <circle cx="130" cy="60" r="5" fill="#FFC72C" />
-                    <circle cx="280" cy="40" r="5" fill="#FAF3E0" />
+                    <path d="M292,156 C250,150 190,148 140,134 L100,122 C112,96 120,70 112,48 L104,38" fill="none" stroke="#FFC72C" strokeWidth="3" strokeDasharray="7 4" strokeLinecap="round" strokeLinejoin="round" />
+                    {/* Brooklyn Bridge */}
+                    <g stroke="#F7F7F2" strokeWidth="1.4" fill="none" strokeLinecap="round" transform="translate(120 122) scale(1.55) translate(-120 -122)">
+                      <path d="M96,121 L144,135" strokeWidth="2.2" />
+                      <path d="M108,124 L108,106 M113,125.5 L113,107.5 M108,106 L113,107.5" />
+                      <path d="M127,129 L127,111 M132,130.5 L132,112.5 M127,111 L132,112.5" />
+                      <path d="M110.5,111 Q120,123 129.5,116" strokeWidth="1" />
+                      <path d="M98,121 Q104,112 110.5,111 M129.5,116 Q137,120 142,134" strokeWidth="1" />
+                    </g>
+                    
+                    {/* Empire State Building at Midtown */}
+                    <g fill="#F7F7F2" transform="translate(104 44) scale(1.5) translate(-104 -44)">
+                      <rect x="96" y="28" width="16" height="16" rx="1" />
+                      <rect x="99" y="20" width="10" height="9" />
+                      <rect x="101.5" y="14" width="5" height="7" />
+                      <rect x="103.5" y="6" width="1.2" height="9" />
+                    </g>
+                    {/* Statue of Liberty in the harbor */}
+                    <g fill="#F7F7F2" fillOpacity="0.8" transform="translate(27 166) scale(1.4) translate(-27 -166)">
+                      <rect x="22" y="160" width="10" height="6" />
+                      <rect x="24.5" y="148" width="5" height="12" rx="1" />
+                      <circle cx="27" cy="145.5" r="2.3" />
+                      <rect x="28.6" y="136" width="1.3" height="9" transform="rotate(12 29 141)" />
+                      <circle cx="31" cy="135" r="1.6" fill="#FFC72C" fillOpacity="1" />
+                    </g>
+                    {/* JFK */}
+                    <circle cx="292" cy="156" r="5" fill="#E4572E" />
+                    {/* labels */}
+                    <g fontFamily="var(--font-body), sans-serif" fontSize="9" fontWeight="600">
+                      <rect x="152" y="136" width="78" height="17" rx="3" fill="#FFC72C" />
+                      <text x="191" y="148" textAnchor="middle" fill="#13294B">Brooklyn Bridge</text>
+                      <text x="122" y="34" fill="#F7F7F2">Midtown</text>
+                      <text x="276" y="146" textAnchor="end" fill="#F7F7F2">JFK</text>
+                      <text x="40" y="172" fill="#F7F7F2" fillOpacity="0.75" fontWeight="400">Lady Liberty</text>
+                    </g>
                   </svg>
-                  <div className="absolute bottom-2 left-2 flex gap-2 text-[10px] font-body">
-                    <span className="bg-black/40 text-cream/70 px-2 py-0.5 rounded-md">— fastest</span>
-                    <span className="bg-black/40 text-amber px-2 py-0.5 rounded-md">- - scenic</span>
-                  </div>
+                </div>
+                <div className="flex justify-between -mt-2 mb-4 px-1 text-[11px] font-body">
+                  <span className="text-cream/50">— fastest route</span>
+                  <span className="text-amber">- - scenic route · +12 min</span>
                 </div>
                 <PickerCard />
               </div>
@@ -361,7 +377,7 @@ function Partners() {
       <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
         <div ref={headRef} className={`${FADE} mb-10`}>
           <Eyebrow>Partners</Eyebrow>
-          <h2 className="font-display tracking-tight text-4xl md:text-5xl font-black text-ink">Travelers ride free. Partners pay.</h2>
+          <h2 className="font-display tracking-tight text-4xl md:text-5xl font-black text-ink">Free for travelers. Partners pay.</h2>
         </div>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
           {PARTNERS.map((p) => (
