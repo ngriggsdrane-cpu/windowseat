@@ -16,9 +16,9 @@ const dmSans = DM_Sans({
 });
 
 export const metadata: Metadata = {
-  title: "WindowSeat — Every Ride, A Story",
+  title: "WindowSeat — Take the long way. On purpose.",
   description:
-    "WindowSeat turns your taxi, bus, or rideshare into a GPS-guided audio tour. Tap Scenic Route and ride curious.",
+    "Scenic Route for rideshare, walking and biking: short detours past the landmarks worth seeing, priced upfront and narrated as you pass.",
 };
 
 export default function RootLayout({
