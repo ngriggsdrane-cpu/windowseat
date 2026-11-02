@@ -59,7 +59,7 @@ function Nav() {
   const links = [
     { href: "#how-it-works", label: "How it works" },
     { href: "#benefits", label: "Why it works" },
-    { href: "#partners", label: "For hotels" },
+    { href: "#partners", label: "Partners" },
   ];
 
   return (
@@ -136,58 +136,85 @@ function track(event: string, props: Record<string, string | number | undefined>
 }
 
 // ── Interactive preview (simulated) ──────────────────────────────────────────
-type OptionKey = "icon" | "gem" | "view";
+type OptionKey = "icon" | "view" | "classic" | "gem";
 const FASTEST_MIN = 38;
-const OPTIONS: { key: OptionKey; label: string; place: string; extra: number; chip: string; path: string }[] = [
-  { key: "icon", label: "The Icon", place: "Brooklyn Bridge", extra: 12, chip: "Brooklyn Bridge", path: "M292,156 C250,150 190,148 140,134 L100,122 C112,96 120,70 112,48 L104,38" },
-  { key: "gem", label: "The Hidden Gem", place: "DUMBO's Washington Street", extra: 9, chip: "DUMBO streets", path: "M292,156 C250,150 196,146 150,134 L126,100 C120,78 114,58 104,38" },
-  { key: "view", label: "The View", place: "Queensboro skyline approach", extra: 4, chip: "Queensboro Bridge", path: "M292,156 C272,120 236,82 200,62 L152,50 L104,38" },
+const OPTIONS: { key: OptionKey; label: string; place: string; extra: number; path: string }[] = [
+  { key: "icon", label: "The Icon", place: "Brooklyn Bridge", extra: 12, path: "M292,156 C250,150 190,148 140,134 L100,122 C112,96 120,70 112,48 L104,38" },
+  { key: "view", label: "The View", place: "Statue of Liberty from the waterfront", extra: 18, path: "M292,156 C240,170 160,174 118,166 C126,152 136,142 142,134 L100,122 C112,96 120,70 112,48 L104,38" },
+  { key: "classic", label: "The Classic", place: "Flatiron Building", extra: 7, path: "M292,156 C260,130 210,104 168,94 L124,86 L100,82 C97,66 100,52 104,38" },
+  { key: "gem", label: "The Hidden Gem", place: "DUMBO's Washington Street", extra: 9, path: "M292,156 C250,150 196,146 150,134 L126,100 C120,78 114,58 104,38" },
 ];
 
-function PreviewMap({ mode, option }: { mode: "fastest" | "scenic"; option: OptionKey }) {
+function PreviewMap({ mode, option, onPick }: { mode: "fastest" | "scenic"; option: OptionKey; onPick: (k: OptionKey) => void }) {
   const sel = OPTIONS.find((o) => o.key === option)!;
+  const lit = (k: OptionKey) => mode === "scenic" && option === k;
+  const tap = (k: OptionKey, name: string) => ({
+    role: "button",
+    tabIndex: 0,
+    "aria-label": `Route past ${name}`,
+    onClick: () => onPick(k),
+    onKeyDown: (e: React.KeyboardEvent) => {
+      if (e.key === "Enter" || e.key === " ") onPick(k);
+    },
+    style: { cursor: "pointer" },
+  });
   return (
     <div className="relative rounded-xl overflow-hidden bg-[#16294A]">
-      <svg viewBox="0 0 320 180" className="w-full h-auto block" role="img" aria-label={mode === "fastest" ? "Simulated map: fastest route from JFK to Midtown" : `Simulated map: scenic route from JFK to Midtown via ${sel.chip}`}>
+      <svg viewBox="0 0 320 180" className="w-full h-auto block" role="group" aria-label={mode === "fastest" ? "Simulated map: fastest route from JFK to Midtown" : `Simulated map: scenic route from JFK to Midtown via ${sel.place}`}>
         <path d="M158,0 C150,55 128,100 78,180 L110,180 C152,108 172,60 182,0 Z" fill="#244B7A" />
         <path d="M0,128 C30,140 60,155 82,180 L0,180 Z" fill="#244B7A" />
         <path d="M292,156 L240,96 L176,40 L104,38" fill="none" stroke="#F7F7F2" strokeOpacity={mode === "fastest" ? 0.9 : 0.25} strokeWidth="3" strokeLinecap="round" strokeLinejoin="round" />
         {mode === "scenic" && (
           <path d={sel.path} fill="none" stroke="#FFC72C" strokeWidth="3" strokeDasharray="7 4" strokeLinecap="round" strokeLinejoin="round" />
         )}
-        <g stroke="#F7F7F2" strokeWidth="1.4" fill="none" strokeLinecap="round" opacity={mode === "scenic" && option === "icon" ? 1 : 0.55} transform="translate(120 122) scale(1.55) translate(-120 -122)">
-          <path d="M96,121 L144,135" strokeWidth="2.2" />
-          <path d="M108,124 L108,106 M113,125.5 L113,107.5 M108,106 L113,107.5" />
-          <path d="M127,129 L127,111 M132,130.5 L132,112.5 M127,111 L132,112.5" />
-          <path d="M110.5,111 Q120,123 129.5,116" strokeWidth="1" />
-          <path d="M98,121 Q104,112 110.5,111 M129.5,116 Q137,120 142,134" strokeWidth="1" />
+        {/* Brooklyn Bridge */}
+        <g {...tap("icon", "the Brooklyn Bridge")}>
+          <rect x="92" y="100" width="56" height="40" fill="transparent" />
+          <g stroke={lit("icon") ? "#FFC72C" : "#F7F7F2"} strokeWidth="1.4" fill="none" strokeLinecap="round" opacity={lit("icon") ? 1 : 0.6} transform="translate(120 122) scale(1.55) translate(-120 -122)">
+            <path d="M96,121 L144,135" strokeWidth="2.2" />
+            <path d="M108,124 L108,106 M113,125.5 L113,107.5 M108,106 L113,107.5" />
+            <path d="M127,129 L127,111 M132,130.5 L132,112.5 M127,111 L132,112.5" />
+            <path d="M110.5,111 Q120,123 129.5,116" strokeWidth="1" />
+            <path d="M98,121 Q104,112 110.5,111 M129.5,116 Q137,120 142,134" strokeWidth="1" />
+          </g>
         </g>
+        {/* Flatiron Building */}
+        <g {...tap("classic", "the Flatiron Building")}>
+          <rect x="60" y="64" width="44" height="32" fill="transparent" />
+          <g fill={lit("classic") ? "#FFC72C" : "#F7F7F2"} opacity={lit("classic") ? 1 : 0.75}>
+            <polygon points="86,92 98,92 98,75 94,69 86,75" />
+          </g>
+          <text x="83" y="88" textAnchor="end" fontFamily="var(--font-body), sans-serif" fontSize="8.5" fontWeight="600" fill="#F7F7F2" fillOpacity={lit("classic") ? 1 : 0.7}>Flatiron</text>
+        </g>
+        {/* Empire State Building at Midtown */}
         <g fill="#F7F7F2" transform="translate(104 44) scale(1.5) translate(-104 -44)">
           <rect x="96" y="28" width="16" height="16" rx="1" />
           <rect x="99" y="20" width="10" height="9" />
           <rect x="101.5" y="14" width="5" height="7" />
           <rect x="103.5" y="6" width="1.2" height="9" />
         </g>
-        <g fill="#F7F7F2" fillOpacity="0.8" transform="translate(27 166) scale(1.4) translate(-27 -166)">
-          <rect x="22" y="160" width="10" height="6" />
-          <rect x="24.5" y="148" width="5" height="12" rx="1" />
-          <circle cx="27" cy="145.5" r="2.3" />
-          <rect x="28.6" y="136" width="1.3" height="9" transform="rotate(12 29 141)" />
-          <circle cx="31" cy="135" r="1.6" fill="#FFC72C" fillOpacity="1" />
+        {/* Statue of Liberty */}
+        <g {...tap("view", "the Statue of Liberty")}>
+          <rect x="10" y="126" width="60" height="54" fill="transparent" />
+          <g fill={lit("view") ? "#FFC72C" : "#F7F7F2"} fillOpacity={lit("view") ? 1 : 0.8} transform="translate(27 166) scale(1.4) translate(-27 -166)">
+            <rect x="22" y="160" width="10" height="6" />
+            <rect x="24.5" y="148" width="5" height="12" rx="1" />
+            <circle cx="27" cy="145.5" r="2.3" />
+            <rect x="28.6" y="136" width="1.3" height="9" transform="rotate(12 29 141)" />
+            <circle cx="31" cy="135" r="1.6" fill="#FFC72C" fillOpacity="1" />
+          </g>
+          <text x="40" y="172" fontFamily="var(--font-body), sans-serif" fontSize="9" fill="#F7F7F2" fillOpacity={lit("view") ? 1 : 0.75} fontWeight={lit("view") ? 600 : 400}>Lady Liberty</text>
         </g>
-        {mode === "scenic" && option === "gem" && <circle cx="150" cy="134" r="5" fill="#FFC72C" />}
-        {mode === "scenic" && option === "view" && <circle cx="176" cy="56" r="5" fill="#FFC72C" />}
+        {/* DUMBO */}
+        <g {...tap("gem", "DUMBO")}>
+          <circle cx="152" cy="150" r="9" fill="transparent" />
+          <circle cx="152" cy="150" r="4" fill={lit("gem") ? "#FFC72C" : "#F7F7F2"} fillOpacity={lit("gem") ? 1 : 0.6} />
+          <text x="160" y="160" fontFamily="var(--font-body), sans-serif" fontSize="8.5" fontWeight="600" fill="#F7F7F2" fillOpacity={lit("gem") ? 1 : 0.7}>DUMBO</text>
+        </g>
         <circle cx="292" cy="156" r="5" fill="#E4572E" />
         <g fontFamily="var(--font-body), sans-serif" fontSize="9" fontWeight="600">
-          {mode === "scenic" && (
-            <>
-              <rect x="150" y="157" width={sel.chip.length * 5.4 + 16} height="17" rx="3" fill="#FFC72C" />
-              <text x="157" y="169" fill="#13294B">{sel.chip}</text>
-            </>
-          )}
           <text x="122" y="34" fill="#F7F7F2">Midtown</text>
           <text x="276" y="146" textAnchor="end" fill="#F7F7F2">JFK</text>
-          <text x="40" y="172" fill="#F7F7F2" fillOpacity="0.75" fontWeight="400">Lady Liberty</text>
         </g>
       </svg>
       <span className="absolute top-2 right-2 bg-black/50 text-cream/80 text-[10px] font-body font-semibold uppercase tracking-wider px-2 py-0.5 rounded-md">Simulated example</span>
@@ -199,10 +226,14 @@ function Preview() {
   const [mode, setMode] = useState<"fastest" | "scenic">("scenic");
   const [option, setOption] = useState<OptionKey>("icon");
   const sel = OPTIONS.find((o) => o.key === option)!;
+  const pick = (k: OptionKey) => {
+    setOption(k);
+    setMode("scenic");
+  };
   return (
     <div className="bg-ink rounded-xl p-4 sm:p-5 shadow-2xl">
       <div className="flex items-center justify-between mb-3">
-        <p className="font-body text-cream text-sm font-semibold"><span className="text-amber">Destination</span> · JFK → Midtown</p>
+        <div><p className="font-body text-amber text-[10px] font-semibold uppercase tracking-widest">Destination</p><p className="font-body text-cream text-sm font-semibold">JFK → Midtown</p></div>
         <div className="grid grid-cols-2 bg-white/10 rounded-md p-0.5" role="tablist" aria-label="Route type">
           {(["fastest", "scenic"] as const).map((m) => (
             <button
@@ -218,8 +249,9 @@ function Preview() {
           ))}
         </div>
       </div>
-      <PreviewMap mode={mode} option={option} />
-      <div className="flex justify-between items-baseline mt-3 mb-3 px-1 font-body">
+      <PreviewMap mode={mode} option={option} onPick={pick} />
+      <p className="font-body text-cream/50 text-[11px] mt-2 px-1">Tap a landmark on the map, or pick one below.</p>
+      <div className="flex justify-between items-baseline mt-2 mb-3 px-1 font-body">
         <span className="text-cream/60 text-xs">Fastest {FASTEST_MIN} min</span>
         <span className={`text-sm font-semibold ${mode === "scenic" ? "text-amber" : "text-cream/40"}`}>
           Scenic {FASTEST_MIN + sel.extra} min (+{sel.extra})
@@ -232,17 +264,14 @@ function Preview() {
             <button
               type="button"
               key={o.key}
-              onClick={() => {
-                setOption(o.key);
-                setMode("scenic");
-              }}
-              className={`w-full text-left flex items-center justify-between px-3 py-2.5 rounded-lg border transition-colors ${on ? "bg-amber/15 border-amber/50" : "bg-white/5 border-white/5 hover:bg-white/10"}`}
+              onClick={() => pick(o.key)}
+              className={`w-full text-left flex items-center justify-between px-3 py-2 rounded-lg border transition-colors ${on ? "bg-amber/15 border-amber/50" : "bg-white/5 border-white/5 hover:bg-white/10"}`}
             >
               <div>
                 <p className={`text-[11px] font-body font-semibold ${on ? "text-amber" : "text-cream/50"}`}>{o.label}</p>
                 <p className={`text-sm font-body ${on ? "text-cream" : "text-cream/70"}`}>{o.place}</p>
               </div>
-              <span className={`text-xs font-body font-semibold px-2 py-0.5 rounded-md ${on ? "bg-amber text-ink" : "bg-white/10 text-cream/50"}`}>+{o.extra} min</span>
+              <span className={`shrink-0 ml-2 text-xs font-body font-semibold px-2 py-0.5 rounded-md ${on ? "bg-amber text-ink" : "bg-white/10 text-cream/50"}`}>+{o.extra} min</span>
             </button>
           );
         })}
@@ -293,7 +322,7 @@ function Hero() {
                 Get New York early access
               </a>
               <a href="#partners" className="border-2 border-ink text-ink font-body font-semibold px-7 py-4 rounded-md text-center hover:bg-ink hover:text-cream transition-colors">
-                For hotels and partners
+                Partner with us
               </a>
             </div>
           </div>
@@ -434,42 +463,21 @@ function Benefits() {
   );
 }
 
-// ── Partners (hospitality and destinations) ──────────────────────────────────
-const PARTNER_POINTS = [
-  "Curated routes from your door",
-  "A simple link or QR code for guests",
-  "Aggregate usage reports, never individual travel histories",
-];
-
+// ── Partners ──────────────────────────────────────────────────────────────────
 function Partners() {
   const ref = useFadeUp();
   return (
-    <section id="partners" className="py-20 md:py-24 bg-cream border-t border-ink/10">
-      <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div ref={ref} className={`${FADE} grid grid-cols-1 md:grid-cols-2 gap-10 items-start`}>
-          <div>
-            <Eyebrow>For hotels and destinations</Eyebrow>
-            <h2 className="font-display tracking-tight text-3xl md:text-4xl font-black text-ink mb-4">Give guests a better way to see the city between plans</h2>
-            <p className="font-body text-muted text-lg">Share a WindowSeat link or QR code at check-in, and see how many guests take a route.</p>
-          </div>
-          <div className="bg-white/60 border border-ink/10 rounded-xl p-6">
-            <ul className="space-y-3 mb-6">
-              {PARTNER_POINTS.map((pt) => (
-                <li key={pt} className="flex gap-2 font-body text-ink/85">
-                  <span className="text-amber font-black">✓</span>
-                  {pt}
-                </li>
-              ))}
-            </ul>
-            <a
-              href="#cta"
-              onClick={() => window.dispatchEvent(new Event("ws:partner"))}
-              className="inline-block bg-ink text-cream font-body font-semibold px-6 py-3 rounded-md hover:bg-ink/90 transition-colors"
-            >
-              Request a New York pilot
-            </a>
-          </div>
-        </div>
+    <section id="partners" className="py-16 md:py-20 bg-cream border-t border-ink/10">
+      <div ref={ref} className={`${FADE} max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 text-center`}>
+        <h2 className="font-display tracking-tight text-3xl md:text-4xl font-black text-ink mb-3">Want to partner with us?</h2>
+        <p className="font-body text-muted text-lg mb-6">We&apos;re exploring partnerships across travel, tourism and transportation. Tell us what you have in mind.</p>
+        <a
+          href="#cta"
+          onClick={() => window.dispatchEvent(new Event("ws:partner"))}
+          className="inline-block bg-ink text-cream font-body font-semibold px-6 py-3 rounded-md hover:bg-ink/90 transition-colors"
+        >
+          Get in touch
+        </a>
       </div>
     </section>
   );
@@ -563,7 +571,7 @@ function CTASection() {
                 disabled={status === "loading"}
                 className="w-full px-7 py-4 rounded-md bg-ink text-cream font-body font-semibold text-base hover:bg-ink/90 transition-colors disabled:opacity-60"
               >
-                {status === "loading" ? "Sending…" : role === "rider" ? "Get early access →" : "Request a New York pilot →"}
+                {status === "loading" ? "Sending…" : role === "rider" ? "Get early access →" : "Get in touch →"}
               </button>
               {status === "error" && (
                 <p className="font-body text-ink text-sm bg-ink/10 rounded-xl px-4 py-2">{message}</p>

@@ -24,6 +24,6 @@ export async function POST(req: NextRequest) {
   const ok = await insertRow("signups", { name, email, role, org, ref, created_at: new Date().toISOString() });
   if (!ok) return NextResponse.json({ error: "Something went wrong. Please try again." }, { status: 500 });
 
-  const message = role === "partner" ? "Thanks. We'll be in touch about a pilot." : "You're on the list.";
+  const message = role === "partner" ? "Thanks. We'll be in touch." : "You're on the list.";
   return NextResponse.json({ message }, { status: 201 });
 }

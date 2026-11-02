@@ -40,3 +40,7 @@ body {
     scroll-behavior: smooth;
   }
 }
+
+/* Map landmarks: no focus box on click, clear ring for keyboard users */
+svg g[role="button"]:focus { outline: none; }
+svg g[role="button"]:focus-visible { outline: 2px solid #FFC72C; outline-offset: 2px; }
