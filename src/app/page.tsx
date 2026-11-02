@@ -273,16 +273,16 @@ function Hero() {
               <span className="block text-orange">Take the scenic&nbsp;route.</span>
             </h1>
             <p className="font-body text-muted text-lg md:text-xl leading-relaxed mb-5 max-w-lg">
-              Turn the journey you&apos;re already taking into a chance to discover something new. Scenic routes, memorable landmarks and local stories, all on your way.
+              Turn the ride or walk you&apos;re already taking into a chance to discover something new. Scenic routes, memorable landmarks and local stories, all on your way.
             </p>
             <dl className="grid grid-cols-1 sm:grid-cols-2 gap-3 mb-6 max-w-lg">
               <div className="bg-white/70 border border-ink/10 rounded-md px-4 py-3">
-                <dt className="font-display text-ink font-extrabold">Loop</dt>
-                <dd className="font-body text-muted text-sm">Got an hour? See the neighborhood and end up back where you started.</dd>
+                <dt className="font-display text-ink font-extrabold">Destination</dt>
+                <dd className="font-body text-muted text-sm">Riding to a meeting? Take the scenic way there.</dd>
               </div>
               <div className="bg-white/70 border border-ink/10 rounded-md px-4 py-3">
-                <dt className="font-display text-ink font-extrabold">Destination</dt>
-                <dd className="font-body text-muted text-sm">Headed to a meeting? Take the scenic way there.</dd>
+                <dt className="font-display text-ink font-extrabold">Loop</dt>
+                <dd className="font-body text-muted text-sm">Got an hour? See the neighborhood and end up back where you started.</dd>
               </div>
             </dl>
             <p className="font-body text-ink text-sm mb-8 max-w-lg border-l-4 border-amber pl-3">
@@ -529,7 +529,7 @@ function CTASection() {
             <span className="block">48 hours in town?</span><span className="block"><span className="underline decoration-ink decoration-[5px] underline-offset-[10px]">Don&apos;t waste the ride.</span></span>
           </h2>
           <p className="font-body text-ink/80 text-lg mb-8">
-            We&apos;re starting with a small set of walking routes in New York. Get early access.
+            We&apos;re starting with walking routes in New York, then bringing scenic routes to your rides. Get early access.
           </p>
           {status === "success" ? (
             <div className="bg-ink/10 border border-ink/20 rounded-xl p-8">
